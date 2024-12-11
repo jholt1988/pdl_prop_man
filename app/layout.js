@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { StoreProvider } from "./lib/StoreProvider";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -14,17 +15,19 @@ const geistMono = localFont({
 
 export const metadata = {
   title: "PDL Rentals-Property",
-  description: "Genera by create next app",
+  description: "The way to track everything rental.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html data-theme='corporate' lang="en">
+    <html data-theme='forest' lang="en">
+      
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+       <StoreProvider>{children}</StoreProvider>
       </body>
+      
     </html>
   );
 }

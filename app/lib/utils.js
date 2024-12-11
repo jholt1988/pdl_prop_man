@@ -31,4 +31,13 @@ export const formatSSNInput = (input) => {
     return data.marshaltext
 }
 
+export const emailRegex = new RegExp("^[^\s@]+@[^\s@]+\.[^\s@]+$")
 
+export const getOnChange = ((formRef) => () =>
+     function onChange(value, dataLabel){
+    formRef.current = {
+      ...formRef.current,
+       [dataLabel] : value}
+       
+    
+})

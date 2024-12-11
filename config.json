@@ -1,14 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/app/*":["./*"],
-      "@/components/*": ["./components*"],
-      "@/features/*": ["features/*"],
-      "@/lib/*": ["lib/*"],
-      "@/lib/store": ["store/*"], 
-      "@/api/*":["api/*"]
-    }, 
     "target": "ES2017",
     "lib": [
       "dom",
@@ -20,7 +11,7 @@
     "strict": false,
     "noEmit": true,
     "incremental": true,
-    "module": "ESNext",
+    "module": "esnext",
     "esModuleInterop": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -41,5 +32,4 @@
   "exclude": [
     "node_modules"
   ]
-  }
-
+}
