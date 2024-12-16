@@ -1,4 +1,4 @@
-import { emailRegex } from "../../../lib/utils";
+import { emailRegex } from "../../../utils/utils";
 export  const getNewTenantConfig = (onChange, formDetails) => {
   
   return [

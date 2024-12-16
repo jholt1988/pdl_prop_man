@@ -1,10 +1,10 @@
 // File: RepairRequestsList.js
 'use client'
 import React, { useState } from 'react';
-import { useAppSelector } from '../../app/lib/hooks';
+import { useAppSelector } from '../../utils/hooks';
 
-const RepairRequestsList = () => {
-  const  workOrders = useAppSelector((state) => state.workOrders.list);
+const RepairRequestsList = ({workOrders}) => {
+
   const [repairRequests, setRepairRequests] = useState(workOrders??[]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

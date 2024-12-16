@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { addTransaction } from "../../store/expenseSlice";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 
-const ExpenseManager = () => {
+const ExpenseManager = ({expenses}) => {
     // State for expenses and filters
     const dispatch = useAppDispatch();
     const [expenses, setExpenses] = useState([]);

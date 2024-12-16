@@ -1,14 +1,7 @@
 'use client'
 import React from "react";
 import DataList from "./data_list";
-import { useAppSelector } from "../../app/lib/hooks"; 
 
-
-const properties = [
-  { name: "Sunset Apartments", address: "123 Main St" },
-  { name: "Downtown Lofts", address: "456 Elm St" },
-];
-const headers = ["Property Name", "Address", "Number of Units"];
 
 /**
  * PropertiesList component renders a list of properties using the DataList component.
@@ -20,8 +13,9 @@ const headers = ["Property Name", "Address", "Number of Units"];
  *   <PropertiesList />
  * )
  */
-const PropertiesList = () => {
-  const properties = useAppSelector((state) => state.properties.list);
+const PropertiesList = ({properties}) => {
+  const headers = ["ID","Property Name", "Address", "Number of Units"];
+
 
 
   return (
@@ -30,6 +24,7 @@ const PropertiesList = () => {
       data={properties}
       renderRow={(property) => (
         [
+          <td key="id" className="px-4 py-2">{property.id}</td>,
           <td key="name" className="px-4 py-2">{property.name}</td>,
           <td key="address" className="px-4 py-2">{property.address}</td>,
           <td key="numUnits" className="px-4 py-2">{property.numUnits}</td>

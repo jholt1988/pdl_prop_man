@@ -1,14 +1,13 @@
 
 'use client'
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector} from "../../app/lib/hooks";
+import { useAppDispatch, useAppSelector} from "../../utils/hooks";
 import createTenantStatement from "../../app/reports/tenantStatement";
 import { addTransaction as saveTransaction } from "../../app/store/ledgerSlice";
 
-const TransactionManager = () => {
+const TransactionManager = ({tenants, lease}) => {
     const dispatch = useAppDispatch();
-    const tenants = useAppSelector((state) => state.tenants.tenantList) ?? [];
-    const selectLeases = useAppSelector((state) => state.leases.leases) ?? [];
+
     // Sample tenants and leases for dropdowns
     // const tenants = [
     //     { id: "1", name: "John Doe" },
@@ -103,7 +102,7 @@ const TransactionManager = () => {
                         >
                             <option className="text-accent" value="">Select a Tenant</option>
                             {tenants.map((tenant) => (
-                                <option  key={tenant.lastName} value={tenant.lastName}>
+                                <option  key={tenant.id} value={tenant.id}>
                                     {tenant.firstName + " " + tenant.lastName}
                                 </option>
                             ))}
@@ -119,7 +118,7 @@ const TransactionManager = () => {
                         >
                             <option value="">Select a Lease</option>
                             {leases.map((lease, i) => (
-                                <option key={i} value={lease.tenant + lease.property}>
+                                <option key={lease.id} value={lease.id}>
                                     {lease.tenant + " " + lease.property}
                                 </option>
                             ))}

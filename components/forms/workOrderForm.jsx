@@ -90,7 +90,7 @@ const RepairRequestForm = () => {
                         name="issue"
                         value={formData.issue}
                         onChange={handleInputChange}
-                        className='input' 
+                        className='input 
                         required
                     ></textarea>
                 </div>

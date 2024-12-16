@@ -14,7 +14,22 @@ export default function Home({ children }) {
             <button className="btn btn-primary">Tenants</button>
           </Link>
           <Link href="/properties">
-            <button className="btn btn-primary">Contact</button>
+            <button className="btn btn-primary">Properties</button>
+          </Link>
+          <Link href="/leases">
+            <button className="btn btn-primary">Leases</button>
+          </Link>
+          <Link href="/repairmaint">
+            <button className="btn btn-primary">Repairs/Maintaince</button>
+          </Link>
+          <Link href="/ledgers">
+            <button className="btn btn-primary">Tenant Ledgers</button>
+          </Link>
+          <Link href="/expenses">
+            <button className="btn btn-primary">Expenses</button>
+          </Link>
+          <Link href="/contractors">
+            <button className="btn btn-primary">Contractors</button>
           </Link>
         </nav>
       </aside>

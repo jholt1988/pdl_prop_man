@@ -1,61 +1,109 @@
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.addVirtualFileSystem(pdfFonts);
+// Import PDFMake (ensure you have pdfmake installed)
+const pdfMake = require("pdfmake/build/pdfmake");
+const pdfFonts = require("pdfmake/build/vfs_fonts");
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-
-function generateTenantStatement(tenantName, transactions) {
+// Function to generate the tenant ledger PDF
+function generateTenantLedgerPdf(companyInfo, tenantInfo, ledgerEntries) {
     const documentDefinition = {
         content: [
-            { text: 'Tenant Statement', style: 'header' },
-            { text: `Tenant: ${tenantName}`, style: 'subheader' },
+            // Company Information
             {
-                style: 'tableExample',
+                text: companyInfo.name,
+                style: 'header'
+            },
+            {
+                text: companyInfo.address,
+                style: 'subheader'
+            },
+            {
+                text: `Phone: ${companyInfo.phone} | Email: ${companyInfo.email}`,
+                style: 'subheader',
+                margin: [0, 0, 0, 20],
+            },
+
+            // Tenant Information
+            {
+                text: `Tenant: ${tenantInfo.name}`,
+                style: 'tenantInfo'
+            },
+            {
+                text: `Property Address: ${tenantInfo.propertyAddress}`,
+                style: 'tenantInfo',
+                margin: [0, 0, 0, 20],
+            },
+
+            // Ledger Entries Table
+            {
                 table: {
+                    headerRows: 1,
+                    widths: ['*', '*', '*', '*'],
                     body: [
-                        ['Date', 'Description', 'Amount'],
-                        ...transactions.map(transaction => [
-                            transaction.date,
-                            transaction.description,
-                            transaction.amount
+                        // Table Header
+                        [
+                            { text: 'Date', style: 'tableHeader' },
+                            { text: 'Description', style: 'tableHeader' },
+                            { text: 'Debit', style: 'tableHeader' },
+                            { text: 'Credit', style: 'tableHeader' }
+                        ],
+                        // Table Rows (Dynamic entries)
+                        ...ledgerEntries.map(entry => [
+                            entry.date,
+                            entry.description,
+                            { text: entry.debit ? `$${entry.debit.toFixed(2)}` : '-', alignment: 'right' },
+                            { text: entry.credit ? `$${entry.credit.toFixed(2)}` : '-', alignment: 'right' }
                         ])
                     ]
-                }
+                },
+                layout: 'lightHorizontalLines'
             }
         ],
         styles: {
             header: {
                 fontSize: 18,
                 bold: true,
+                alignment: 'center',
                 margin: [0, 0, 0, 10]
             },
             subheader: {
-                fontSize: 14,
-                bold: true,
-                margin: [0, 10, 0, 5]
+                fontSize: 12,
+                alignment: 'center',
+                margin: [0, 0, 0, 5]
             },
-            tableExample: {
-                margin: [0, 5, 0, 15]
+            tenantInfo: {
+                fontSize: 12,
+                bold: true
+            },
+            tableHeader: {
+                bold: true,
+                fontSize: 12,
+                color: 'black'
             }
         }
     };
 
-    const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-    return pdfDocGenerator;
-
+    // Create and open the PDF
+    pdfMake.createPdf(documentDefinition).open();
 }
- 
-const createTenantStatement = (tenantName, transactions) => {
-    const pdfDocGenerator = generateTenantStatement(tenantName, transactions);
-    pdfDocGenerator.open();
+export default generateTenantLedgerPdf;
+// Example Usage
+const companyInfo = {
+    name: "Second Chance Rentals",
+    address: "123 Opportunity Blvd, New Beginnings, NB 45678",
+    phone: "(123) 456-7890",
+    email: "info@secondchancerentals.com"
 };
 
-export default createTenantStatement;
-// Example usage
-const tenantName = 'John Doe';
-const transactions = [
-    { date: '2023-01-01', description: 'Rent Payment', amount: '$1000' },
-    { date: '2023-02-01', description: 'Rent Payment', amount: '$1000' },
-    { date: '2023-03-01', description: 'Rent Payment', amount: '$1000' }
+const tenantInfo = {
+    name: "John Doe",
+    propertyAddress: "456 Hope Street, Apt 12"
+};
+
+const ledgerEntries = [
+    { date: '2024-01-01', description: 'Rent Payment', debit: null, credit: 1200 },
+    { date: '2024-01-15', description: 'Late Fee', debit: 50, credit: null },
+    { date: '2024-02-01', description: 'Rent Payment', debit: null, credit: 1200 },
 ];
 
-generateTenantStatement(tenantName, transactions);
+// Generate the PDF
+generateTenantLedgerPdf(companyInfo, tenantInfo, ledgerEntries);

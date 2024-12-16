@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../lib/hooks';
-import { addVendor } from '../../store/vendorSlice';
+import { useAppDispatch } from '../../utils/hooks';
+import { addVendor } from '../../store/slices/vendorSlice';
 
 const AddVendor = () => {
     const dispatch = useAppDispatch();

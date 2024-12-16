@@ -1,11 +1,10 @@
 'use client'
-import React, { use, useState } from 'react';
-import { addLease } from '../../app/store/leaseSlice';
-import { useAppDispatch, useAppSelector } from '../../app/lib/hooks';
+import React, { useState } from 'react';
+import { addLease } from '../../store/slices/leaseSlice';
+import { useAppDispatch } from '../../utils/hooks';
 const AddLeaseForm = ({ tenants, properties }) => {
     const dispatch = useAppDispatch();
-    tenants = useAppSelector((state) => state.tenants.tenantList);
-    properties = useAppSelector((state) => state.properties.list);
+
    
     const [propertyId, setPropertyId] = useState('');
     const [units, setUnits] = useState([]);

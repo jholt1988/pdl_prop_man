@@ -1,11 +1,10 @@
 "use client"
 import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../utils/hooks';
 import Form from './form';
 import {getNewTenantConfig} from './config/newTenantFormConfig';
-import { formatSSNInput, formatTelephoneInput } from '../../lib/utils';
-import { addTenant } from '../../store/tenantSlice';
-import { useAppDispatch } from '../../lib/hooks';
+import { formatSSNInput, formatTelephoneInput } from '../../utils/utils';
+import { addTenant } from '../../store/slices/tenantSlice';
 
 
 
@@ -31,7 +30,7 @@ import { useAppDispatch } from '../../lib/hooks';
  */
  export default function NewTenantForm(){
    const formRef = useRef({});
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
 
 
  const handleInput = (e) => {
@@ -58,13 +57,21 @@ import { useAppDispatch } from '../../lib/hooks';
              
   }
 
-  const handleSubmit= (e) =>  {
-const newTenantData = formRef.current;
-const newTenant = new FormData(newTenantData);
-dispatch(addTenant(newTenant));
-  
-  }
+   const handleSubmit = (e) => {
+     const newTenantData = formRef.current;
 
+     const newTenantInfo = document.querySelector('#addTenantForm');
+     if (newTenantData instanceof HTMLFormElement) {
+       const newTenant = new FormData();
+       for (const key in data) {
+          newTenant.append(key, data[key]);
+       }
+       dispatch(addTenant(newTenant));
+  
+     } else {
+       console.log('Error: newTenantData is not an instance of FormData');
+     }
+   }
   
 
   return(

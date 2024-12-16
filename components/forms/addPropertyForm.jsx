@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from "react";
-import { addProperty } from "../../store/propertiesSlice";
-import { useAppDispatch } from "../../lib/hooks";
+import { addProperty } from "../../store/slices/propertiesSlice";
+import { useAppDispatch } from "../../utils/hooks"
 const AddPropertyForm = () => {
   const [property, setProperty] = useState({ name: "", address: "", numUnits: 0 });
   const [showModal, setShowModal] = useState(false);
