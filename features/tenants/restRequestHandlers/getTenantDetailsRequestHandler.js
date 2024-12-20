@@ -3,26 +3,34 @@ import { prismaClient } from '../../prisma/prismaClient';
 import { tenantDetailsResponse } from "../restResponses/tenantDetailsResponse";
 import { notFoundErrorResponse } from '../../common/restResponses/notFoundErrorResponse';
 import { restRequestBuilder, RestRequestBuilderOptions } from "../../common/restResponses/restRequestBuilder";
+import { idParameterValidator } from "../../../utils/paramValidators";
 
-const getTenantDetailsRequestHandlerOptions = () => {
-    const options = new RestRequestBuilderOptions({
+const getTenantDetailsRequestHandlerOptions = {
+    onValidateParams: idParameterValidator,
         onValidRequestAsync: async (req, details) => {
             if (details && details.params) {
-                const { params } = details.params
-                const id =  params.id
-
-                const tenant = prismaClient.tenant.findUnique({ where: { id } })
+        
                 
+                const id = details.params.id
+            
+
+                const tenant = await prismaClient.tenant.findFirst({
+                    where: {
+                        id: id
+                    }
+                })
+                console.log(tenant)
                 if (tenant) {
                     return tenantDetailsResponse(tenant)
                 } else {
                     return notFoundErrorResponse()
                 }
             } else {
-                throw new error('Params were not defined')
+                throw new Error('Params were not defined')
             }
-        }
-    })
 }
+}
+    
+
 
 export const getTenantRequestHandler = restRequestBuilder(getTenantDetailsRequestHandlerOptions)

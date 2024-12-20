@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from "next/server";
 import { badRequestErrorResponse } from "./badRequestErrorResponse";
 import { badErrorRequestFromZodIssues } from "./badErrorRequestFromZodIssues";
@@ -22,8 +23,9 @@ class ValidatedRequestDetailsParams{
 export class RestRequestBuilderOptions {
     constructor(options) {
        
-        this.onValidateParams = options.onValidateParams;
-        this.onValidRequestAsync = options.onValidRequestAsync;
+       this.onValidateParams = options.onValidateParams
+        this.onValidRequestAsync = options.onValidRequestAsync
+        this.onValidateRequestAsync = options.onValidateRequestAsync
         this.params = options.params;
         this.validatedRequestBody = options.validatedRequestBody;
        
@@ -40,34 +42,39 @@ export class RestRequestBuilderOptions {
    
 
 
-export function restRequestBuilder(reqOptions) {
-    const options = new RestRequestBuilderOptions(reqOptions)
-    console.log(options)
+export function restRequestBuilder(options) {
+    
     return async function (req, params) {
+        
+     
         try {
         let isValidRequest= false
             let details= {
-                validatedRequestBody: null,
-                params: null
+                
             };
-            
+         
+               
             if (options.onValidateParams) {
-                const { isValid, errorMessage } = options.onValidateParams;
-                console.log(isValid)
+                const { isValid, errorMessage } = await options.onValidateParams(params)
+               console.log(await options.onValidateParams(params))
                 if (!isValid) {
                     if (errorMessage) {
                         return badRequestErrorResponse(errorMessage);
                     }
                     return badRequestErrorResponse("invalid params");
                 }
-                details.params = params;
+                
+                details.params = await params
+                  
+                
             }
             if (options.onValidateRequestAsync) {
                 const validation = await options.onValidateRequestAsync(req);
+                console.log(validation)
                 if (!validation.success) {
                     const { issues } = validation;
 
-                    return badRequestErrorResponseFromZodIssues(issues);
+                    return badErrorRequestFromZodIssues(issues);
                 } else {
                     details.validatedRequestBody = validation.validatedRequestBody;
                     isValidRequest = true;
@@ -77,6 +84,7 @@ export function restRequestBuilder(reqOptions) {
             }
             if (isValidRequest) {
                 const response = await options.onValidRequestAsync(req, details);
+                console.log(response)
                 return response;
             } else {
                 return badRequestErrorResponse();

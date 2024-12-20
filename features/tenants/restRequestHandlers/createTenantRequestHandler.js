@@ -1,17 +1,16 @@
 import { Prisma } from "@prisma/client";
 import { prismaClient } from "../../prisma/prismaClient";
 import { NextResquest } from "next/server";
-import { tenantDetailsResponse } from "../restResponses/tenantDetailsResponse";
-import { TenantCreateInputObjectSchema } from "../../../prisma/generated/schemas/objects/TenantCreateInput.schema";
+import { propertyDetailsResponse } from "../restResponses/tenantDetailsResponse";
+import { PropertyCreateInputObjectSchema } from "../../../prisma/generated/schemas/objects/PropertyCreateInput.schema";
 import { restRequestBuilder, RestRequestBuilderOptions } from "../../common/restResponses/restRequestBuilder"
 
 
-const createTenantRequestHandlerOptions = () => {
-    const options = new RestRequestBuilderOptions({
+const createPropertyRequestHandlerOptions = {
+   
         onValidateRequestAsync: async (req) => {
-            
-                const requestBody = await req.json()
-                const validation = TenantCreateInputObjectSchema.safeParse(requestBody)
+         const requestBody = await req.json()
+        const validation = PropertyCreateInputObjectSchema.safeParse(requestBody)
 
             if (!validation.success) {
                 const { errors } = validation.error
@@ -24,14 +23,15 @@ const createTenantRequestHandlerOptions = () => {
         },
         onValidRequestAsync: async (req, details) => { 
             if(details && details.validatedRequestBody){
-                const createArgs = Prisma.TenantCreateArgs({
-                    data: details.validatedRequestBody
-
-                })
-
-                const tenant = await prismaClient.tenant.create(createArgs)
                 
-                return tenantDetailsResponse(tenant)
+                const createArgs = { data: details.validatedRequestBody }
+
+
+
+                const property = await prismaClient.property.create(createArgs)
+                
+            
+                return propertyDetailsResponse(property)
             
             
             
@@ -40,8 +40,7 @@ const createTenantRequestHandlerOptions = () => {
             }
         }
         
-    })
-    return options
+
 }
 
-export const createTenantRequestHandler = restRequestBuilder(createTenantRequestHandlerOptions)
+export const createTenantRequestHandler = restRequestBuilder(createPropertyRequestHandlerOptions)

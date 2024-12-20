@@ -4,10 +4,11 @@ import { okResponse } from "../../common/restResponses/okResponse";
 
 
 export const tenantDetailsResponse = (tenant) => {
-    if (tenant instanceof Tenant) {
+    if (tenant) {
+       
         return okResponse(tenant);
     } else {
-        return NextResponse.json(tenant, {
+        return NextResponse.json( {
             status: 400
         });
     }

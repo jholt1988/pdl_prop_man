@@ -4,5 +4,5 @@ import { createTenantRequestHandler } from "../../../features/tenants/restReques
 
 export {
     getListOfTenantsRequest as GET,
-    createTenantRequestHandler as POSTm
+    createTenantRequestHandler as POST
 }

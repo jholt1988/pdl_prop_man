@@ -4,8 +4,7 @@ import { noContentResponse } from "../../common/restResponses/noContentResponse"
 import { NextResquest } from "next/server";
 import { restRequestBuilder, RestRequestBuilderOptions } from "../../common/restResponses/restRequestBuilder";
 
-const deletetRequestHandlerOptions = () => {
-    const options = new RestRequestBuilderOptions({
+const deleteTenantRequestHandlerOptions = {
         onValidateRequestAsync: async (req) => {
             
                 const requestBody = await req.json()
@@ -35,8 +34,7 @@ const deletetRequestHandlerOptions = () => {
             }
         }
         
-    })
-    return options
+   
 }
 
-export const deleteTenantRequestHandler = restRequestBuilder(deleteTenantRequestHandler)
+export const deleteTenantRequestHandler = restRequestBuilder(deleteTenantRequestHandlerOptions)

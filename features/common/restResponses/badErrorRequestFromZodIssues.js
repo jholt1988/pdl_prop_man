@@ -27,7 +27,7 @@ export const badErrorRequestFromZodIssues = (issues) => {
             }
         });
 
-        return badRequestErrorResponse(additionalDetails.join(". "));
+        return badRequestErrorResponse(additionalDetails);
     } else {
         return badRequestErrorResponse();
     }

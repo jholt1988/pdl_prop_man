@@ -1,9 +1,8 @@
 import { okResponse } from "../common/restResponses/okResponse";
 import { Vendor } from "./vendorPayload";
 
-export const listOfVendorResponse = (data) => {
+export const listOfVendorResponse = (vendors) => {
 
-    const vendors = data.map(vendor => new Vendor(vendor));
     return okResponse(vendors);
 }
 

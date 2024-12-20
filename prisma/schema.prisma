@@ -21,7 +21,7 @@ model Tenant {
   id          Int           @id @default(autoincrement())
   firstName   String
   lastName    String
-  email       String        @unique
+  email       String        
   phone       String
   ssn         String
   leases      Lease[]
