@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
 import { FloatFieldUpdateOperationsInputObjectSchema } from './FloatFieldUpdateOperationsInput.schema';
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
-import { TenantUpdateOneRequiredWithoutTransactionNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutTransactionNestedInput.schema';
 import { LeaseUpdateOneRequiredWithoutTransactionNestedInputObjectSchema } from './LeaseUpdateOneRequiredWithoutTransactionNestedInput.schema';
+import { TenantUpdateOneRequiredWithoutTransactionNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutTransactionNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -27,14 +27,14 @@ const Schema: z.ZodType<Prisma.TransactionUpdateInput> = z
         z.lazy(() => DateTimeFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    tenant: z
-      .lazy(
-        () => TenantUpdateOneRequiredWithoutTransactionNestedInputObjectSchema,
-      )
-      .optional(),
     lease: z
       .lazy(
         () => LeaseUpdateOneRequiredWithoutTransactionNestedInputObjectSchema,
+      )
+      .optional(),
+    tenant: z
+      .lazy(
+        () => TenantUpdateOneRequiredWithoutTransactionNestedInputObjectSchema,
       )
       .optional(),
   })

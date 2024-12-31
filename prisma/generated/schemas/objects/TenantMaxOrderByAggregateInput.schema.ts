@@ -11,6 +11,10 @@ const Schema: z.ZodType<Prisma.TenantMaxOrderByAggregateInput> = z
     email: z.lazy(() => SortOrderSchema).optional(),
     phone: z.lazy(() => SortOrderSchema).optional(),
     ssn: z.lazy(() => SortOrderSchema).optional(),
+    DOB: z.lazy(() => SortOrderSchema).optional(),
+    driversLicense: z.lazy(() => SortOrderSchema).optional(),
+    emergencyContact: z.lazy(() => SortOrderSchema).optional(),
+    emergencyContactPhone: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

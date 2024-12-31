@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { IntFilterObjectSchema } from './IntFilter.schema';
 import { StringFilterObjectSchema } from './StringFilter.schema';
+import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
+import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { LeaseListRelationFilterObjectSchema } from './LeaseListRelationFilter.schema';
 import { TransactionListRelationFilterObjectSchema } from './TransactionListRelationFilter.schema';
 
@@ -40,6 +42,25 @@ const Schema: z.ZodType<Prisma.TenantWhereInput> = z
     ssn: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
+    DOB: z
+      .union([
+        z.lazy(() => DateTimeNullableFilterObjectSchema),
+        z.coerce.date(),
+      ])
+      .optional()
+      .nullable(),
+    driversLicense: z
+      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
+    emergencyContact: z
+      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
+    emergencyContactPhone: z
+      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
     leases: z.lazy(() => LeaseListRelationFilterObjectSchema).optional(),
     Transaction: z
       .lazy(() => TransactionListRelationFilterObjectSchema)

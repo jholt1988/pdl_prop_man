@@ -8,7 +8,7 @@ import { isValid } from "zod";
 
 const getListOfTenantsRequestOptions = {
     
-        onValidateParams:{isValid: true, errorMessage: ""},
+    onValidateParams: (params) => { return { isValid: true, errorMessage: "" } },
         onValidRequestAsync: async (req) => {
             const tenants = await prismaClient.tenant.findMany()
 

@@ -5,6 +5,7 @@ import Form from './form';
 import {getNewTenantConfig} from './config/newTenantFormConfig';
 import { formatSSNInput, formatTelephoneInput } from '../../utils/utils';
 import { addTenant } from '../../store/slices/tenantSlice';
+import { useCreateTenantMutation } from '../../features/tenants/store/tenant';
 
 
 
@@ -29,7 +30,7 @@ import { addTenant } from '../../store/slices/tenantSlice';
  * @param {Object} e - The event object.
  */
  export default function NewTenantForm(){
-   const formRef = useRef({});
+   const formRef = useRef();
    const dispatch = useAppDispatch();
 
 
@@ -55,18 +56,27 @@ import { addTenant } from '../../store/slices/tenantSlice';
              [dataLabel] : value}
              
              
-  }
+   }
+   const [createTenant,{ error, isLoading}] = useCreateTenantMutation({refetchOnFocus: true, refetchOnMountOrArgChange: true, skip:false});
 
    const handleSubmit = (e) => {
+  
      const newTenantData = formRef.current;
 
      const newTenantInfo = document.querySelector('#addTenantForm');
-     if (newTenantData instanceof HTMLFormElement) {
-       const newTenant = new FormData();
-       for (const key in data) {
-          newTenant.append(key, data[key]);
+     let newTenant = new FormData();
+     console.log(newTenantData);
+     if (newTenantData) {
+      
+       
+       for (const [key, value] of Object.entries(newTenantData)) {
+         newTenant.append(key, value);
+         console.log(newTenant)
+        
+         ;
        }
-       dispatch(addTenant(newTenant));
+        createTenant(newTenantData);
+       dispatch(addTenant(newTenantData));
   
      } else {
        console.log('Error: newTenantData is not an instance of FormData');

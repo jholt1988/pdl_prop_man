@@ -1,10 +1,10 @@
 import { z } from 'zod';
 import { IntFilterObjectSchema } from './IntFilter.schema';
 import { StringFilterObjectSchema } from './StringFilter.schema';
-import { PropertyRelationFilterObjectSchema } from './PropertyRelationFilter.schema';
-import { PropertyWhereInputObjectSchema } from './PropertyWhereInput.schema';
 import { LeaseListRelationFilterObjectSchema } from './LeaseListRelationFilter.schema';
 import { RepairRequestListRelationFilterObjectSchema } from './RepairRequestListRelationFilter.schema';
+import { PropertyRelationFilterObjectSchema } from './PropertyRelationFilter.schema';
+import { PropertyWhereInputObjectSchema } from './PropertyWhereInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -45,15 +45,15 @@ const Schema: z.ZodType<Prisma.UnitWhereInput> = z
     propertyId: z
       .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
+    leases: z.lazy(() => LeaseListRelationFilterObjectSchema).optional(),
+    RepairRequest: z
+      .lazy(() => RepairRequestListRelationFilterObjectSchema)
+      .optional(),
     property: z
       .union([
         z.lazy(() => PropertyRelationFilterObjectSchema),
         z.lazy(() => PropertyWhereInputObjectSchema),
       ])
-      .optional(),
-    leases: z.lazy(() => LeaseListRelationFilterObjectSchema).optional(),
-    RepairRequest: z
-      .lazy(() => RepairRequestListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

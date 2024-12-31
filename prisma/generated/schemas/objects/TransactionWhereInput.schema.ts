@@ -3,10 +3,10 @@ import { IntFilterObjectSchema } from './IntFilter.schema';
 import { StringFilterObjectSchema } from './StringFilter.schema';
 import { FloatFilterObjectSchema } from './FloatFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
-import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
-import { TenantWhereInputObjectSchema } from './TenantWhereInput.schema';
 import { LeaseRelationFilterObjectSchema } from './LeaseRelationFilter.schema';
 import { LeaseWhereInputObjectSchema } from './LeaseWhereInput.schema';
+import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
+import { TenantWhereInputObjectSchema } from './TenantWhereInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -44,16 +44,16 @@ const Schema: z.ZodType<Prisma.TransactionWhereInput> = z
     date: z
       .union([z.lazy(() => DateTimeFilterObjectSchema), z.coerce.date()])
       .optional(),
-    tenant: z
-      .union([
-        z.lazy(() => TenantRelationFilterObjectSchema),
-        z.lazy(() => TenantWhereInputObjectSchema),
-      ])
-      .optional(),
     lease: z
       .union([
         z.lazy(() => LeaseRelationFilterObjectSchema),
         z.lazy(() => LeaseWhereInputObjectSchema),
+      ])
+      .optional(),
+    tenant: z
+      .union([
+        z.lazy(() => TenantRelationFilterObjectSchema),
+        z.lazy(() => TenantWhereInputObjectSchema),
       ])
       .optional(),
   })

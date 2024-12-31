@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { TenantCreateNestedOneWithoutLeasesInputObjectSchema } from './TenantCreateNestedOneWithoutLeasesInput.schema';
 import { PropertyCreateNestedOneWithoutLeaseInputObjectSchema } from './PropertyCreateNestedOneWithoutLeaseInput.schema';
+import { TenantCreateNestedOneWithoutLeasesInputObjectSchema } from './TenantCreateNestedOneWithoutLeasesInput.schema';
 import { UnitCreateNestedOneWithoutLeasesInputObjectSchema } from './UnitCreateNestedOneWithoutLeasesInput.schema';
 import { TransactionCreateNestedManyWithoutLeaseInputObjectSchema } from './TransactionCreateNestedManyWithoutLeaseInput.schema';
 
@@ -14,10 +14,10 @@ const Schema: z.ZodType<Prisma.LeaseCreateWithoutUtilitiesInput> = z
     monthlyRent: z.number(),
     deposit: z.number(),
     petDeposit: z.number(),
-    tenant: z.lazy(() => TenantCreateNestedOneWithoutLeasesInputObjectSchema),
     property: z.lazy(
       () => PropertyCreateNestedOneWithoutLeaseInputObjectSchema,
     ),
+    tenant: z.lazy(() => TenantCreateNestedOneWithoutLeasesInputObjectSchema),
     unit: z.lazy(() => UnitCreateNestedOneWithoutLeasesInputObjectSchema),
     Transaction: z
       .lazy(() => TransactionCreateNestedManyWithoutLeaseInputObjectSchema)

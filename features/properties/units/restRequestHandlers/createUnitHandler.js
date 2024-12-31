@@ -1,17 +1,20 @@
-import { Prisma } from "@prisma/client";
+import  { prismaClient } from '../../../../features/prisma/prismaClient'
 import { unitResponse } from "../unitResponse";
-import { UnitCreateInputObjectSchema } from '../../../prisma/generated/schemas/objects/UnitCreateInput.schema'
-import { restRequestBuilder, RestRequestBuilderOptions } from "../../common/restResponses/restRequestBuilder"
+import { UnitCreateManyInputObjectSchema } from '../../../../prisma/generated/schemas/objects/UnitCreateManyInput.schema'
+import { restRequestBuilder } from "../../../common/restResponses/restRequestBuilder"
 
 const createUnitRequestHandlerOptions = {
    
         onValidateRequestAsync: async (req) => {
-         const requestBody = await req.json()
-        const validation = UnitCreateInputObjectSchema.safeParse(requestBody)
-
+        const requestBody = await req.json()
+        console.log("Request Body:", requestBody)
+        const validation = UnitCreateManyInputObjectSchema.safeParse(requestBody)
+console.log("Validation:", validation)
             if (!validation.success) {
-                const { errors } = validation.error
-                return { success: false, issues: errors }
+                const issues = validation.error.issues.map((issue) => { 
+                    return { message: issue.message, path: `${issue.path}`.toString() }
+                })
+                return { success: false, issues }
             } else {
                 return {
                     success: true, validatedRequestBody: validation.data

@@ -1,3 +1,5 @@
 {
-    "terminal.integrated.defaultProfile.linux": ""
+    "terminal.integrated.defaultProfile.linux": "",
+    "haselerdev.aiquickfix.apiKey": "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",
+    "haselerdev.aiquickfix.model": "gpt-4"
 }

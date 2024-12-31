@@ -4,19 +4,19 @@ import NewLeaseForm from "../../components/forms/addLeaseForm";
 import LeasesList from "../../components/data_display/lease_list";
 import { fetchLeases } from "../../store/slices/leaseSlice";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { useGetLeaseListQuery } from "../../features/leases/store/lease";
+import { useGetTenantListQuery } from "../../features/tenants/store/tenant";
+import { useGetPropertyListWithUnitsQuery } from "../../features/properties/store/property";
 
 function LeasesPage() {
-    const tenants = useAppSelector(selectTenants);
-    const properties = useAppSelector(selectProperties);
-    const leases = dispatch(fetchLeases());
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(fetchLeases());
-    }, []);
+    
+    const {data: leases} = useGetLeaseListQuery({ pollingInterval: 3000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false })
+    const { data: tenants } = useGetTenantListQuery({ pollingInterval: 3000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false })    
+    const { data: properties } = useGetPropertyListWithUnitsQuery({ pollingInterval: 3000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false })   
     return (
         <>
-            <NewLeaseForm tenants={tenants} properties={properties} />
-            <LeasesList  leases={leases}/>
+            <NewLeaseForm tenants={tenants?.data ?? []} properties={properties?.data ?? []} />
+            <LeasesList leases={leases?.data ?? []} />
         </>
     )
 }       

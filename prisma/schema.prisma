@@ -1,14 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
+
 generator zod {
   provider = "prisma-zod-generator"
+  isGenerateInclude= true
 }
 
 datasource db {
@@ -18,14 +14,18 @@ datasource db {
 }
 
 model Tenant {
-  id          Int           @id @default(autoincrement())
-  firstName   String
-  lastName    String
-  email       String        
-  phone       String
-  ssn         String
-  leases      Lease[]
-  Transaction Transaction[]
+  id                    Int           @id @default(autoincrement())
+  firstName             String
+  lastName              String
+  email                 String        @unique
+  phone                 String
+  ssn                   String
+  DOB                   DateTime?     @db.Date
+  driversLicense        String?
+  emergencyContact      String?
+  emergencyContactPhone String?
+  leases                Lease[]
+  Transaction           Transaction[]
 }
 
 model Property {
@@ -33,9 +33,9 @@ model Property {
   name          String
   address       String
   numUnits      Int
-  units         Unit[]
   Lease         Lease[]
   RepairRequest RepairRequest[]
+  units         Unit[]
 }
 
 model Unit {
@@ -46,9 +46,9 @@ model Unit {
   bathrooms      Int
   propertyStatus String
   propertyId     Int
-  property       Property        @relation(fields: [propertyId], references: [id])
   leases         Lease[]
   RepairRequest  RepairRequest[]
+  property       Property        @relation(fields: [propertyId], references: [id])
 }
 
 model Lease {
@@ -60,13 +60,13 @@ model Lease {
   deposit     Float
   petDeposit  Float
   tenantId    Int
-  tenant      Tenant        @relation(fields: [tenantId], references: [id])
   propertyId  Int
-  property    Property      @relation(fields: [propertyId], references: [id])
   unitId      Int
+  utilitiesId Int           @unique
+  property    Property      @relation(fields: [propertyId], references: [id])
+  tenant      Tenant        @relation(fields: [tenantId], references: [id])
   unit        Unit          @relation(fields: [unitId], references: [id])
   utilities   Utilities     @relation(fields: [utilitiesId], references: [id])
-  utilitiesId Int           @unique
   Transaction Transaction[]
 }
 
@@ -86,12 +86,12 @@ model RepairRequest {
   phone      String
   issue      String
   image      String?
-  property   Property @relation(fields: [propertyId], references: [id])
   propertyId Int
-  unit       Unit     @relation(fields: [unitId], references: [id])
   unitId     Int
   status     String
   vendorId   Int
+  property   Property @relation(fields: [propertyId], references: [id])
+  unit       Unit     @relation(fields: [unitId], references: [id])
   vendor     Vendor   @relation(fields: [vendorId], references: [id])
 }
 
@@ -107,12 +107,12 @@ model Vendor {
 model Transaction {
   id          Int      @id @default(autoincrement())
   tenantId    Int
-  tenant      Tenant   @relation(fields: [tenantId], references: [id])
   leaseId     Int
-  lease       Lease    @relation(fields: [leaseId], references: [id])
   description String
   amount      Float
   date        DateTime
+  lease       Lease    @relation(fields: [leaseId], references: [id])
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
 }
 
 model Expense {
@@ -121,5 +121,4 @@ model Expense {
   category    String
   amount      Float
   date        DateTime
-
 }

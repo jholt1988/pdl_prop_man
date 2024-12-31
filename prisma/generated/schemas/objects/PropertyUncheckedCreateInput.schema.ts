@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { UnitUncheckedCreateNestedManyWithoutPropertyInputObjectSchema } from './UnitUncheckedCreateNestedManyWithoutPropertyInput.schema';
 import { LeaseUncheckedCreateNestedManyWithoutPropertyInputObjectSchema } from './LeaseUncheckedCreateNestedManyWithoutPropertyInput.schema';
 import { RepairRequestUncheckedCreateNestedManyWithoutPropertyInputObjectSchema } from './RepairRequestUncheckedCreateNestedManyWithoutPropertyInput.schema';
+import { UnitUncheckedCreateNestedManyWithoutPropertyInputObjectSchema } from './UnitUncheckedCreateNestedManyWithoutPropertyInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -11,9 +11,6 @@ const Schema: z.ZodType<Prisma.PropertyUncheckedCreateInput> = z
     name: z.string(),
     address: z.string(),
     numUnits: z.number(),
-    units: z
-      .lazy(() => UnitUncheckedCreateNestedManyWithoutPropertyInputObjectSchema)
-      .optional(),
     Lease: z
       .lazy(
         () => LeaseUncheckedCreateNestedManyWithoutPropertyInputObjectSchema,
@@ -24,6 +21,9 @@ const Schema: z.ZodType<Prisma.PropertyUncheckedCreateInput> = z
         () =>
           RepairRequestUncheckedCreateNestedManyWithoutPropertyInputObjectSchema,
       )
+      .optional(),
+    units: z
+      .lazy(() => UnitUncheckedCreateNestedManyWithoutPropertyInputObjectSchema)
       .optional(),
   })
   .strict();

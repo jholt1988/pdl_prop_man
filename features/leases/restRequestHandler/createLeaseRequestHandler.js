@@ -11,10 +11,17 @@ const createLeaseRequestHandlerOptions = {
          const requestBody = await req.json()
         const validation = LeaseCreateInputObjectSchema.safeParse(requestBody)
 
-            if (!validation.success) {
-                const { errors } = validation.error
-                return { success: false, issues: errors }
-            } else {
+        if (!validation.success) {
+            const { issues } = validation.error
+            return {
+                success: false, issues: issues.map((issue) => {
+                    return {
+                        message: issue.message, path: issue.path[0], keys: issue.keys
+                        
+                    }
+                })
+            }
+        } else {
                 return {
                     success: true, validatedRequestBody: validation.data
                 }

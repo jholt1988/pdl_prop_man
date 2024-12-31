@@ -1,44 +1,36 @@
 
-import { NextRequest, NextResponse } from "next/server";
 import { badRequestErrorResponse } from "./badRequestErrorResponse";
 import { badErrorRequestFromZodIssues } from "./badErrorRequestFromZodIssues";
 import { internalServerErrorResponse } from "./internalServerErrorResponse";
 
 
-class RestRequestValdationResult {
-    constructor(success, validatedRequestBody, issues) {
-        this.success = success;
-        this.validatedRequestBody = validatedRequestBody;
-        this.issues = issues;       
-    }
-}
+// class RestRequestValdationResult {
+//     constructor(success, validatedRequestBody, issues) {
+//         this.success = success;
+//         this.validatedRequestBody = validatedRequestBody;
+//         this.issues = issues;       
+//     }
+// }
 
-class ValidatedRequestDetailsParams{
-    constructor(validatedRequestBody, params) {
-        this.validatedRequestBody = validatedRequestBody;
-        this.params = params;
-    }
-}
+// class ValidatedRequestDetailsParams{
+//     constructor(validatedRequestBody, params) {
+//         this.validatedRequestBody = validatedRequestBody;
+//         this.params = params;
+//     }
+// }
 
-export class RestRequestBuilderOptions {
-    constructor(options) {
+// export class RestRequestBuilderOptions {
+//     constructor(options) {
        
-       this.onValidateParams = options.onValidateParams
-        this.onValidRequestAsync = options.onValidRequestAsync
-        this.onValidateRequestAsync = options.onValidateRequestAsync
-        this.params = options.params;
-        this.validatedRequestBody = options.validatedRequestBody;
+//        this.onValidateParams = options.onValidateParams
+//         this.onValidRequestAsync = options.onValidRequestAsync
+//         this.onValidateRequestAsync = options.onValidateRequestAsync
+//         this.params = options.params;
+//         this.validatedRequestBody = options.validatedRequestBody;
        
 
          
-    }
-   
-  
-   
-  
 
-    }
-  
    
 
 
@@ -49,14 +41,16 @@ export function restRequestBuilder(options) {
      
         try {
         let isValidRequest= false
-            let details= {
+            let details = {
+                validatedRequestBody: {},
+                params: ""
                 
             };
          
                
-            if (options.onValidateParams) {
-                const { isValid, errorMessage } = await options.onValidateParams(params)
-               console.log(await options.onValidateParams(params))
+            if (options.onValidateParams ) {
+                const { isValid, errorMessage } =   options.onValidateParams(params);
+              
                 if (!isValid) {
                     if (errorMessage) {
                         return badRequestErrorResponse(errorMessage);
@@ -64,7 +58,7 @@ export function restRequestBuilder(options) {
                     return badRequestErrorResponse("invalid params");
                 }
                 
-                details.params = await params
+                details.params =  params
                   
                 
             }

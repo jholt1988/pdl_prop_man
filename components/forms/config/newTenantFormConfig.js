@@ -24,7 +24,7 @@ export  const getNewTenantConfig = (onChange, formDetails) => {
         type:"text", 
         name:"email",
         label:"Email", 
-        onChange: (e) => onChange(e.target.value, "Email"),
+        onChange: (e) => onChange(e.target.value, "email"),
         value:formDetails.email,
         // pattern: emailRegex,
         id:"email", 
@@ -54,14 +54,14 @@ export  const getNewTenantConfig = (onChange, formDetails) => {
             label:"Date of Birth",
             onChange: (e) => onChange(e.target.value, "DOB"),
             value: formDetails.dob, 
-            id:"dob", 
+            id:"Date of Birth", 
             autocomplete:"DOB"
         },
     {
-      type: "tex",
+      type: "text",
       name: "driverslicense",
       label: "Drivers License",
-      onChange: (e) => onChange(e.target.value, "Drivers License"),
+      onChange: (e) => onChange(e.target.value, "driversLicense"),
       value: formDetails.driverslicense,
       id: "driverslicense",
       autocomplete: "drivers license"
@@ -70,7 +70,7 @@ export  const getNewTenantConfig = (onChange, formDetails) => {
       type: "text",
       name: "emergencycontact",
       label: "Emergency Contact",
-      onChange: (e) => onChange(e.target.value, "Emergency Contact"),
+      onChange: (e) => onChange(e.target.value, "emergencyContact"),
       value: formDetails.emergencycontact,
       id: "emergencycontact",
       
@@ -79,7 +79,7 @@ export  const getNewTenantConfig = (onChange, formDetails) => {
       type: "text",
       name: "EmergencyContactPhone",
       label: "Emergency Contact Phone",
-      onChange: (e) => onChange(e.target.value, "Emergency Contact Phone"),
+      onChange: (e) => onChange(e.target.value, "emergencyContactPhone"),
       value: formDetails.EmergencyContactPhone,
       id: "EmergencyContactPhone",
     

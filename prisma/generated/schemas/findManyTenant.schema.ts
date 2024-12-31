@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import { TenantIncludeObjectSchema } from './objects/TenantInclude.schema';
 import { TenantOrderByWithRelationInputObjectSchema } from './objects/TenantOrderByWithRelationInput.schema';
 import { TenantWhereInputObjectSchema } from './objects/TenantWhereInput.schema';
 import { TenantWhereUniqueInputObjectSchema } from './objects/TenantWhereUniqueInput.schema';
 import { TenantScalarFieldEnumSchema } from './enums/TenantScalarFieldEnum.schema';
 
 export const TenantFindManySchema = z.object({
+  include: z.lazy(() => TenantIncludeObjectSchema.optional()),
   orderBy: z
     .union([
       TenantOrderByWithRelationInputObjectSchema,

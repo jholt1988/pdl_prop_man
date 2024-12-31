@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { FloatFieldUpdateOperationsInputObjectSchema } from './FloatFieldUpdateOperationsInput.schema';
-import { TenantUpdateOneRequiredWithoutLeasesNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutLeasesNestedInput.schema';
 import { PropertyUpdateOneRequiredWithoutLeaseNestedInputObjectSchema } from './PropertyUpdateOneRequiredWithoutLeaseNestedInput.schema';
+import { TenantUpdateOneRequiredWithoutLeasesNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutLeasesNestedInput.schema';
 import { UnitUpdateOneRequiredWithoutLeasesNestedInputObjectSchema } from './UnitUpdateOneRequiredWithoutLeasesNestedInput.schema';
 import { UtilitiesUpdateOneRequiredWithoutLeaseNestedInputObjectSchema } from './UtilitiesUpdateOneRequiredWithoutLeaseNestedInput.schema';
 import { TransactionUpdateManyWithoutLeaseNestedInputObjectSchema } from './TransactionUpdateManyWithoutLeaseNestedInput.schema';
@@ -48,11 +48,11 @@ const Schema: z.ZodType<Prisma.LeaseUpdateInput> = z
         z.lazy(() => FloatFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    tenant: z
-      .lazy(() => TenantUpdateOneRequiredWithoutLeasesNestedInputObjectSchema)
-      .optional(),
     property: z
       .lazy(() => PropertyUpdateOneRequiredWithoutLeaseNestedInputObjectSchema)
+      .optional(),
+    tenant: z
+      .lazy(() => TenantUpdateOneRequiredWithoutLeasesNestedInputObjectSchema)
       .optional(),
     unit: z
       .lazy(() => UnitUpdateOneRequiredWithoutLeasesNestedInputObjectSchema)

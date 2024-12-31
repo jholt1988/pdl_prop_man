@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import { RepairRequestIncludeObjectSchema } from './objects/RepairRequestInclude.schema';
 import { RepairRequestOrderByWithRelationInputObjectSchema } from './objects/RepairRequestOrderByWithRelationInput.schema';
 import { RepairRequestWhereInputObjectSchema } from './objects/RepairRequestWhereInput.schema';
 import { RepairRequestWhereUniqueInputObjectSchema } from './objects/RepairRequestWhereUniqueInput.schema';
 import { RepairRequestScalarFieldEnumSchema } from './enums/RepairRequestScalarFieldEnum.schema';
 
 export const RepairRequestFindFirstSchema = z.object({
+  include: RepairRequestIncludeObjectSchema.optional(),
   orderBy: z
     .union([
       RepairRequestOrderByWithRelationInputObjectSchema,

@@ -8,7 +8,7 @@ import {  persistReducer,
   PURGE,
   REGISTER,
 } from 'redux-persist' 
-import propertiesReducer from "./slices/propertiesSlice";
+
 import tenantReducer from "./slices/tenantSlice";
 import workOrderReducer from "./slices/repairSlice";
 import leaseReducer from "./slices/leaseSlice";
@@ -19,6 +19,9 @@ import unitReducer from "./slices/unitsSlice";
 import paymentReducer from './slices/paymentsSlice'
 import { api } from "./slices/apiSlice";
 import storage from "./storage";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { listenerMiddleware } from "./middleware/listenerMiddleware";
+
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer;
@@ -39,11 +42,10 @@ const persistConfig ={
 }
 
 const appReducer = combineReducers({
-  [api.reducerPath]: api.reducer,
-  properties: propertiesReducer,
+  
+  // properties: propertiesReducer,
   tenants: tenantReducer,
   workOrders: workOrderReducer,
-  leases: leaseReducer,
   ledgers: ledgerReducer,
   expenses: expenseReducer,
   contractors: contractorReducer,
@@ -61,7 +63,10 @@ const persistedReducer =persistReducer(persistConfig, appReducer)
 
 export const makeStore = () => {
   return configureStore({
-    reducer: persistedReducer,
+    reducer: {
+      [api.reducerPath]: api.reducer,
+      state:persistedReducer
+    },
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) =>
@@ -69,12 +74,14 @@ export const makeStore = () => {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         }
-      }),
+      }).prepend(listenerMiddleware.middleware).concat(api.middleware),
+    
   })
 
 
 }
 
+setupListeners(makeStore().dispatch)
 
 // listenerMiddleware.startListening({
   

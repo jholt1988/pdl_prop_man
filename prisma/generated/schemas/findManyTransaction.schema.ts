@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import { TransactionIncludeObjectSchema } from './objects/TransactionInclude.schema';
 import { TransactionOrderByWithRelationInputObjectSchema } from './objects/TransactionOrderByWithRelationInput.schema';
 import { TransactionWhereInputObjectSchema } from './objects/TransactionWhereInput.schema';
 import { TransactionWhereUniqueInputObjectSchema } from './objects/TransactionWhereUniqueInput.schema';
 import { TransactionScalarFieldEnumSchema } from './enums/TransactionScalarFieldEnum.schema';
 
 export const TransactionFindManySchema = z.object({
+  include: z.lazy(() => TransactionIncludeObjectSchema.optional()),
   orderBy: z
     .union([
       TransactionOrderByWithRelationInputObjectSchema,

@@ -3,10 +3,10 @@ import { IntFilterObjectSchema } from './IntFilter.schema';
 import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { FloatFilterObjectSchema } from './FloatFilter.schema';
-import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
-import { TenantWhereInputObjectSchema } from './TenantWhereInput.schema';
 import { PropertyRelationFilterObjectSchema } from './PropertyRelationFilter.schema';
 import { PropertyWhereInputObjectSchema } from './PropertyWhereInput.schema';
+import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
+import { TenantWhereInputObjectSchema } from './TenantWhereInput.schema';
 import { UnitRelationFilterObjectSchema } from './UnitRelationFilter.schema';
 import { UnitWhereInputObjectSchema } from './UnitWhereInput.schema';
 import { UtilitiesRelationFilterObjectSchema } from './UtilitiesRelationFilter.schema';
@@ -64,16 +64,16 @@ const Schema: z.ZodType<Prisma.LeaseWhereInput> = z
     utilitiesId: z
       .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
-    tenant: z
-      .union([
-        z.lazy(() => TenantRelationFilterObjectSchema),
-        z.lazy(() => TenantWhereInputObjectSchema),
-      ])
-      .optional(),
     property: z
       .union([
         z.lazy(() => PropertyRelationFilterObjectSchema),
         z.lazy(() => PropertyWhereInputObjectSchema),
+      ])
+      .optional(),
+    tenant: z
+      .union([
+        z.lazy(() => TenantRelationFilterObjectSchema),
+        z.lazy(() => TenantWhereInputObjectSchema),
       ])
       .optional(),
     unit: z

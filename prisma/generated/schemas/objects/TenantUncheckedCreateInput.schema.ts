@@ -12,6 +12,10 @@ const Schema: z.ZodType<Prisma.TenantUncheckedCreateInput> = z
     email: z.string(),
     phone: z.string(),
     ssn: z.string(),
+    DOB: z.coerce.date().optional().nullable(),
+    driversLicense: z.string().optional().nullable(),
+    emergencyContact: z.string().optional().nullable(),
+    emergencyContactPhone: z.string().optional().nullable(),
     leases: z
       .lazy(() => LeaseUncheckedCreateNestedManyWithoutTenantInputObjectSchema)
       .optional(),

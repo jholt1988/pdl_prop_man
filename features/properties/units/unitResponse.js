@@ -1,5 +1,5 @@
-import { okResponse } from "../common/restResponses/okResponse";
-import { Property } from "./propertyPayload";
+import { okResponse } from "../../common/restResponses/okResponse";
+
 
 export const unitResponse = (units) => {
     return okResponse(units);

@@ -14,7 +14,7 @@ import DataList from "./data_list";
  *   <TenantList />
  * )
  */
-const TenantList = ({tenants}) => {
+const TenantList = ({tenants, isLoading}) => {
 
   
 
@@ -24,20 +24,21 @@ const TenantList = ({tenants}) => {
         <DataList
             headers={headers}
             data={tenants}
+            isLoading={isLoading}
             renderRow={(tenant) => (
                 <>
                     <td className="px-4 py-2">{tenant.id}</td>
-                    <td className="px-4 py-2">{tenant.name}</td>
+                    <td className="px-4 py-2">{`${tenant.firstName} ${tenant.lastName}`}</td>
                     <td className="px-4 py-2">{tenant.email}</td>
                     <td className="px-4 py-2">{tenant.phone}</td>
                     <td className="px-4 py-2">{tenant.dob}</td>
                     <td className="px-4 py-2">{tenant.ssn}</td>
-                    <td className="px-4 py-2">{tenant.driverslicense}</td>
-                    <td className="px-4 py-2">{tenant.emergencycontact}</td>
-                    <td className="px-4 py-2">{tenant.emergencyphone}</td>
-                </>
+                    <td className="px-4 py-2">{tenant.driversLicense}</td>
+                    <td className="px-4 py-2">{tenant.emergencyContact}</td>
+                    <td className="px-4 py-2">{tenant.emergencyContactPhone}</td>
+            </>
             )}
-        />
+       />
     );
 };
 

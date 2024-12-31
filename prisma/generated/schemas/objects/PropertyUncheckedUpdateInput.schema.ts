@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
-import { UnitUncheckedUpdateManyWithoutPropertyNestedInputObjectSchema } from './UnitUncheckedUpdateManyWithoutPropertyNestedInput.schema';
 import { LeaseUncheckedUpdateManyWithoutPropertyNestedInputObjectSchema } from './LeaseUncheckedUpdateManyWithoutPropertyNestedInput.schema';
 import { RepairRequestUncheckedUpdateManyWithoutPropertyNestedInputObjectSchema } from './RepairRequestUncheckedUpdateManyWithoutPropertyNestedInput.schema';
+import { UnitUncheckedUpdateManyWithoutPropertyNestedInputObjectSchema } from './UnitUncheckedUpdateManyWithoutPropertyNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -33,9 +33,6 @@ const Schema: z.ZodType<Prisma.PropertyUncheckedUpdateInput> = z
         z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    units: z
-      .lazy(() => UnitUncheckedUpdateManyWithoutPropertyNestedInputObjectSchema)
-      .optional(),
     Lease: z
       .lazy(
         () => LeaseUncheckedUpdateManyWithoutPropertyNestedInputObjectSchema,
@@ -46,6 +43,9 @@ const Schema: z.ZodType<Prisma.PropertyUncheckedUpdateInput> = z
         () =>
           RepairRequestUncheckedUpdateManyWithoutPropertyNestedInputObjectSchema,
       )
+      .optional(),
+    units: z
+      .lazy(() => UnitUncheckedUpdateManyWithoutPropertyNestedInputObjectSchema)
       .optional(),
   })
   .strict();

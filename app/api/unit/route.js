@@ -1,7 +1,7 @@
 import { createUnitRequestHandler } from "../../../features/properties/units/restRequestHandlers/createUnitHandler";
-import { getListOfUnitsRequestHandler } from "../../../features/properties/units/restRequestHandlers/getListOfUnitsRequestHandler";
+import { getListOfUnitRequestHandler } from "../../../features/properties/units/restRequestHandlers/getListOfUnitRequestHandler";
 
 export {
     createUnitRequestHandler as POST,
-    getListOfUnitsRequestHandler as GET
+    getListOfUnitRequestHandler as GET
 }

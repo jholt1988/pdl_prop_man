@@ -83,7 +83,7 @@ export default function Form ({config, title, onSubmit, onInput, id, onClick}) {
     return (
       <div id={id} className="p-4 border rounded-lg shadow-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">{title}</h2>
-        <form onSubmit={e => handleSubmit(onSubmit(e))}  action="#" className="space-y-4">
+        <form onSubmit={(e) => handleSubmit(onSubmit(e))} className="space-y-4">
      {
            config.map(element => {
             return getElement(register, element)

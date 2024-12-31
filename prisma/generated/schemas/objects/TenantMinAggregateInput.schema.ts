@@ -10,6 +10,10 @@ const Schema: z.ZodType<Prisma.TenantMinAggregateInputType> = z
     email: z.literal(true).optional(),
     phone: z.literal(true).optional(),
     ssn: z.literal(true).optional(),
+    DOB: z.literal(true).optional(),
+    driversLicense: z.literal(true).optional(),
+    emergencyContact: z.literal(true).optional(),
+    emergencyContactPhone: z.literal(true).optional(),
   })
   .strict();
 

@@ -1,46 +1,96 @@
 'use client'
 import React, { useState } from "react";
-import { addProperty } from "../../store/slices/propertiesSlice";
-import { useAppDispatch } from "../../utils/hooks"
+
+import { useCreatePropertyMutation } from "../../features/properties/store/property";
+import { useCreateUnitMutation } from "../../features/properties/units/store/units";
+import { selectAllProperties } from "../../store/slices/propertiesSlice.js"
+import { selectPropertyListResult } from "../../features/properties/store/property";
+
+import { useAppSelector } from "../../utils/hooks.js";
+
 const AddPropertyForm = () => {
   const [property, setProperty] = useState({ name: "", address: "", numUnits: 0 });
   const [showModal, setShowModal] = useState(false);
   const [unitForms, setUnitForms] = useState([]);
   const options = ['Occupied', 'Vacant-Not Ready', 'Vacant', 'Reserved-Deposit Received']
-const dispatch = useAppDispatch();
+  const [createProperty] = useCreatePropertyMutation();
+  const [createUnit] = useCreateUnitMutation();
 
   const handlePropertyChange = (e) => {
+    if (e.target.name === "numUnits") {
+      setProperty({ ...property, numUnits: Number(e.target.value) });
+      return;
+    }
+  
     setProperty({ ...property, [e.target.name]: e.target.value });
   };
 
   const handleUnitsSubmit = () => {
     const unitsArray = Array.from({ length: property.numUnits }, (_, i) => ({
       unitNumber: i + 1,
-      SQFT: "",
+      propertyId: "",
+      sqft: "",
       bedrooms: 0,
       bathrooms: 0,
       propertyStatus: "",
     }));
     setUnitForms(unitsArray);
+    // console.log("UnitForms:", unitForms);
     setShowModal(true);
   };
 
   const handleUnitChange = (index, field, value) => {
     const updatedUnits = [...unitForms];
     updatedUnits[index][field] = value;
+    // console.log("Updated Units:", updatedUnits);
     setUnitForms(updatedUnits);
+
+  };
+  let unitDataArr = []
+
+  const saveUnits =  (units,propertyId) => {
+    units.forEach( (unit) => {
+      const unitData = {
+        propertyId: propertyId,
+        unitNumber: unit.unitNumber,
+        sqft: unit.sqft,
+        bedrooms: unit.bedrooms,
+        bathrooms: unit.bathrooms,
+        propertyStatus: unit.propertyStatus,
+        
+      };
+      // console.log("Unit Data:", unitData);
+       unitDataArr.push(unitData)
+    })
+     
+  }
+  const resetProperty = () => {
+    setShowModal(false);
+    setProperty({ name: "", address: "", numUnits: Number(0) });
+    setUnitForms([]);
+  }
+
+
+  
+  
+  const handlePropertySubmit = async () => {
+   return await createProperty(property).unwrap().then((response) => {
+      console.log("Response:", response);
+      console.log("unitData:", unitDataArr)
+
+     saveUnits(unitForms, response.data.id);
+     unitDataArr.forEach(async (unitData) => {  
+       createUnit(unitData)
+      })
+      console.log("unitData:", unitDataArr)
+    }).catch((error) => {
+      console.log("Error:", error);
+    })
+   
+   
   };
 
-  const saveProperty = () => {
-    console.log("Property:", property);
-    console.log("Units:", unitForms);
-    property.units = unitForms;
-    console.log("Property:", property);
-    dispatch(addProperty(property));
-    setShowModal(false);
-    setProperty({ name: "", address: "", numUnits: 0 });
-    setUnitForms([]);
-  };
+  
 
   return (
     <div className="p-4 max-w-lg mx-auto">
@@ -49,7 +99,7 @@ const dispatch = useAppDispatch();
         <div>
           <label className="block text-sm font-medium">Property Name</label>
           <input
-            type="text"
+            type="text"address
             name="name"
             value={property.name}
             onChange={handlePropertyChange}
@@ -95,12 +145,14 @@ const dispatch = useAppDispatch();
                 <div key={index} className="border-b pb-4 mb-4">
                   <h4 className="text-sm text-accent font-medium">Unit {unit.unitNumber}</h4>
                   <div>
+                    <label className="block text-secondary text-sm">Unit Number</label>
+                    <input  type="text" value={unit.unitNumber} className="mt-1 block w-full text-accent border-gray-300 rounded-md" disabled />
                     <label className="block text-secondary text-sm">SQFT</label>
                     <input
                       type="text"
                       value={unit.SQFT}
                       onChange={(e) =>
-                        handleUnitChange(index, "SQFT", e.target.value)
+                        handleUnitChange(index, "sqft", e.target.value)
                       }
                       className="mt-1 block w-full text-accent border-gray-300 rounded-md"
                     />
@@ -112,7 +164,7 @@ const dispatch = useAppDispatch();
                       type="text"
                       value={unit.bedrooms}
                       onChange={(e) =>
-                        handleUnitChange(index, "bedrooms", e.target.value)
+                        handleUnitChange(index, "bedrooms", Number(e.target.value))
                       }
                       className="mt-1 block w-full text-accent border-gray-300 rounded-md"
                     />
@@ -123,7 +175,7 @@ const dispatch = useAppDispatch();
                       type="text"
                       value={unit.bathrooms}
                       onChange={(e) =>
-                        handleUnitChange(index, "bathrooms", e.target.value)
+                        handleUnitChange(index, "bathrooms", Number(e.target.value))
                       }
                       className="mt-1 block w-full text-accent border-gray-300 rounded-md"
                     />
@@ -135,7 +187,7 @@ const dispatch = useAppDispatch();
                       className="input input-bordered input-primary text-accent flex items center gap-2"
                       value={unit.unitStatus} 
                       onChange={(e) =>
-                        handleUnitChange(index, "unitStatus", e.target.value)
+                        handleUnitChange(index, "propertyStatus", e.target.value)
                       }
                       defaultValue="Select Status"
                     >
@@ -153,7 +205,7 @@ const dispatch = useAppDispatch();
             </div>
             <button
               type="button"
-              onClick={saveProperty}
+              onClick={handlePropertySubmit}
               className="px-4 py-2 bg-green-600 text-secondary rounded-md mt-4"
             >
               Save Property

@@ -17,7 +17,7 @@
     "axios": "^1.7.7",
     "axios-mock-adapter": "^2.1.0",
     "jsdom": "^25.0.1",
-    "next": "^15.1.0",
+    "next": "^15.1.2",
     "nextjs": "^0.0.3",
     "pdfmake": "^0.2.15",
     "prisma-zod-generator": "^0.8.13",

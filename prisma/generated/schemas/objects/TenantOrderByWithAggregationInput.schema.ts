@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
+import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { TenantCountOrderByAggregateInputObjectSchema } from './TenantCountOrderByAggregateInput.schema';
 import { TenantAvgOrderByAggregateInputObjectSchema } from './TenantAvgOrderByAggregateInput.schema';
 import { TenantMaxOrderByAggregateInputObjectSchema } from './TenantMaxOrderByAggregateInput.schema';
@@ -16,6 +17,30 @@ const Schema: z.ZodType<Prisma.TenantOrderByWithAggregationInput> = z
     email: z.lazy(() => SortOrderSchema).optional(),
     phone: z.lazy(() => SortOrderSchema).optional(),
     ssn: z.lazy(() => SortOrderSchema).optional(),
+    DOB: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    driversLicense: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    emergencyContact: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    emergencyContactPhone: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     _count: z
       .lazy(() => TenantCountOrderByAggregateInputObjectSchema)
       .optional(),

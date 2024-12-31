@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { PropertyCreateNestedOneWithoutUnitsInputObjectSchema } from './PropertyCreateNestedOneWithoutUnitsInput.schema';
 import { LeaseCreateNestedManyWithoutUnitInputObjectSchema } from './LeaseCreateNestedManyWithoutUnitInput.schema';
+import { PropertyCreateNestedOneWithoutUnitsInputObjectSchema } from './PropertyCreateNestedOneWithoutUnitsInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -11,12 +11,12 @@ const Schema: z.ZodType<Prisma.UnitCreateWithoutRepairRequestInput> = z
     bedrooms: z.number(),
     bathrooms: z.number(),
     propertyStatus: z.string(),
-    property: z.lazy(
-      () => PropertyCreateNestedOneWithoutUnitsInputObjectSchema,
-    ),
     leases: z
       .lazy(() => LeaseCreateNestedManyWithoutUnitInputObjectSchema)
       .optional(),
+    property: z.lazy(
+      () => PropertyCreateNestedOneWithoutUnitsInputObjectSchema,
+    ),
   })
   .strict();
 

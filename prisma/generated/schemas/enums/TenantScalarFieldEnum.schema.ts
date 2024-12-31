@@ -7,4 +7,8 @@ export const TenantScalarFieldEnumSchema = z.enum([
   'email',
   'phone',
   'ssn',
+  'DOB',
+  'driversLicense',
+  'emergencyContact',
+  'emergencyContactPhone',
 ]);

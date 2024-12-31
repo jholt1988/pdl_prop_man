@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
-import { UnitUpdateManyWithoutPropertyNestedInputObjectSchema } from './UnitUpdateManyWithoutPropertyNestedInput.schema';
 import { RepairRequestUpdateManyWithoutPropertyNestedInputObjectSchema } from './RepairRequestUpdateManyWithoutPropertyNestedInput.schema';
+import { UnitUpdateManyWithoutPropertyNestedInputObjectSchema } from './UnitUpdateManyWithoutPropertyNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -26,11 +26,11 @@ const Schema: z.ZodType<Prisma.PropertyUpdateWithoutLeaseInput> = z
         z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    units: z
-      .lazy(() => UnitUpdateManyWithoutPropertyNestedInputObjectSchema)
-      .optional(),
     RepairRequest: z
       .lazy(() => RepairRequestUpdateManyWithoutPropertyNestedInputObjectSchema)
+      .optional(),
+    units: z
+      .lazy(() => UnitUpdateManyWithoutPropertyNestedInputObjectSchema)
       .optional(),
   })
   .strict();

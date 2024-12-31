@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
-import { prismaClient } from "../../prisma/prismaClient";
+import { prismaClient } from "../../../prisma/prismaClient";
 import { unitResponse} from "../unitResponse";
 
-import { restRequestBuilder, RestRequestBuilderOptions } from "../../common/restResponses/restRequestBuilder"
+import { restRequestBuilder, RestRequestBuilderOptions } from "../../../common/restResponses/restRequestBuilder"
 
 
 

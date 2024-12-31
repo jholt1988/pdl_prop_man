@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import { UtilitiesIncludeObjectSchema } from './objects/UtilitiesInclude.schema';
 import { UtilitiesOrderByWithRelationInputObjectSchema } from './objects/UtilitiesOrderByWithRelationInput.schema';
 import { UtilitiesWhereInputObjectSchema } from './objects/UtilitiesWhereInput.schema';
 import { UtilitiesWhereUniqueInputObjectSchema } from './objects/UtilitiesWhereUniqueInput.schema';
 import { UtilitiesScalarFieldEnumSchema } from './enums/UtilitiesScalarFieldEnum.schema';
 
 export const UtilitiesFindManySchema = z.object({
+  include: z.lazy(() => UtilitiesIncludeObjectSchema.optional()),
   orderBy: z
     .union([
       UtilitiesOrderByWithRelationInputObjectSchema,

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { TenantCreateNestedOneWithoutTransactionInputObjectSchema } from './TenantCreateNestedOneWithoutTransactionInput.schema';
 import { LeaseCreateNestedOneWithoutTransactionInputObjectSchema } from './LeaseCreateNestedOneWithoutTransactionInput.schema';
+import { TenantCreateNestedOneWithoutTransactionInputObjectSchema } from './TenantCreateNestedOneWithoutTransactionInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -9,11 +9,11 @@ const Schema: z.ZodType<Prisma.TransactionCreateInput> = z
     description: z.string(),
     amount: z.number(),
     date: z.coerce.date(),
-    tenant: z.lazy(
-      () => TenantCreateNestedOneWithoutTransactionInputObjectSchema,
-    ),
     lease: z.lazy(
       () => LeaseCreateNestedOneWithoutTransactionInputObjectSchema,
+    ),
+    tenant: z.lazy(
+      () => TenantCreateNestedOneWithoutTransactionInputObjectSchema,
     ),
   })
   .strict();

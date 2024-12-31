@@ -1,6 +1,6 @@
-import { error } from "@prisma/internals/dist/logger";
+
 import { api } from "../../../store/slices/apiSlice";
-import { arg } from "@prisma/internals";
+
 
 export const tenantApi = api.injectEndpoints({
 
@@ -13,15 +13,16 @@ export const tenantApi = api.injectEndpoints({
             }),
             providesTags: (result, error, arg) =>
                 result
-                    ? [...result.data.map(({ id }) => ({ type: "Tenants", id })), "Tenants"]
-                    : ["Tenants"]
+                    ? [...result.data.map(({ id }) => ({ type: "Tenants", id })), { type: "TenantList", id:"LIST" }, { type: "Tenants", id: "LIST" }]
+                    : ["Tenants", "TenantList"]
         }),
         getTenantDetails: builder.query({
             query: ({ id }) => `tenants/${id}`,
             providesTags: (result, error, arg) =>
+
                 result
-                    ? [...result.data.map(({ id }) => ([{ type: "Tenants", id },{type:"TenantList",id}])), "Tenants", "TenantList"]
-                    : ["Tenants"]
+                    ? [...result.data.map(({ id }) => ({ type: "Tenants", id })), { type: "TenantList", id }]
+                    : ["Tenants", "TenantList"]
         }),
         createTenant: builder.mutation({
             query: (args) => ({

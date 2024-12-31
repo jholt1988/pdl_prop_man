@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import { LeaseIncludeObjectSchema } from './objects/LeaseInclude.schema';
 import { LeaseOrderByWithRelationInputObjectSchema } from './objects/LeaseOrderByWithRelationInput.schema';
 import { LeaseWhereInputObjectSchema } from './objects/LeaseWhereInput.schema';
 import { LeaseWhereUniqueInputObjectSchema } from './objects/LeaseWhereUniqueInput.schema';
 import { LeaseScalarFieldEnumSchema } from './enums/LeaseScalarFieldEnum.schema';
 
 export const LeaseFindManySchema = z.object({
+  include: z.lazy(() => LeaseIncludeObjectSchema.optional()),
   orderBy: z
     .union([
       LeaseOrderByWithRelationInputObjectSchema,
