@@ -14,4 +14,4 @@ function ExpensePage() {
     )
 }   
 
-export default ExpenseManager
+export default ExpensePage
