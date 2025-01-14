@@ -3,6 +3,7 @@ import { IntFilterObjectSchema } from './IntFilter.schema';
 import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { FloatFilterObjectSchema } from './FloatFilter.schema';
+import { IntNullableFilterObjectSchema } from './IntNullableFilter.schema';
 import { PropertyRelationFilterObjectSchema } from './PropertyRelationFilter.schema';
 import { PropertyWhereInputObjectSchema } from './PropertyWhereInput.schema';
 import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
@@ -62,8 +63,9 @@ const Schema: z.ZodType<Prisma.LeaseWhereInput> = z
       .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
     utilitiesId: z
-      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
-      .optional(),
+      .union([z.lazy(() => IntNullableFilterObjectSchema), z.number()])
+      .optional()
+      .nullable(),
     property: z
       .union([
         z.lazy(() => PropertyRelationFilterObjectSchema),
@@ -87,7 +89,8 @@ const Schema: z.ZodType<Prisma.LeaseWhereInput> = z
         z.lazy(() => UtilitiesRelationFilterObjectSchema),
         z.lazy(() => UtilitiesWhereInputObjectSchema),
       ])
-      .optional(),
+      .optional()
+      .nullable(),
     Transaction: z
       .lazy(() => TransactionListRelationFilterObjectSchema)
       .optional(),

@@ -1,7 +1,7 @@
 // Import PDFMake (ensure you have pdfmake installed)
 const pdfMake = require("pdfmake/build/pdfmake");
 const pdfFonts = require("pdfmake/build/vfs_fonts");
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+pdfMake.vfs = pdfFonts.vfs;
 
 // Function to generate the tenant ledger PDF
 function generateTenantLedgerPdf(companyInfo, tenantInfo, ledgerEntries) {
@@ -86,24 +86,24 @@ function generateTenantLedgerPdf(companyInfo, tenantInfo, ledgerEntries) {
     pdfMake.createPdf(documentDefinition).open();
 }
 export default generateTenantLedgerPdf;
-// Example Usage
-const companyInfo = {
-    name: "Second Chance Rentals",
-    address: "123 Opportunity Blvd, New Beginnings, NB 45678",
-    phone: "(123) 456-7890",
-    email: "info@secondchancerentals.com"
-};
+// // Example Usage
+// const companyInfo = {
+//     name: "Second Chance Rentals",
+//     address: "123 Opportunity Blvd, New Beginnings, NB 45678",
+//     phone: "(123) 456-7890",
+//     email: "info@secondchancerentals.com"
+// };
 
-const tenantInfo = {
-    name: "John Doe",
-    propertyAddress: "456 Hope Street, Apt 12"
-};
+// const tenantInfo = {
+//     name: "John Doe",
+//     propertyAddress: "456 Hope Street, Apt 12"
+// };
 
-const ledgerEntries = [
-    { date: '2024-01-01', description: 'Rent Payment', debit: null, credit: 1200 },
-    { date: '2024-01-15', description: 'Late Fee', debit: 50, credit: null },
-    { date: '2024-02-01', description: 'Rent Payment', debit: null, credit: 1200 },
-];
+// const ledgerEntries = [
+//     { date: '2024-01-01', description: 'Rent Payment', debit: null, credit: 1200 },
+//     { date: '2024-01-15', description: 'Late Fee', debit: 50, credit: null },
+//     { date: '2024-02-01', description: 'Rent Payment', debit: null, credit: 1200 },
+// ];
 
-// Generate the PDF
-generateTenantLedgerPdf(companyInfo, tenantInfo, ledgerEntries);
+// // Generate the PDF
+// generateTenantLedgerPdf(companyInfo, tenantInfo, ledgerEntries);

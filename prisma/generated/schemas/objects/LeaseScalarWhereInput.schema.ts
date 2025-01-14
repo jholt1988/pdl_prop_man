@@ -3,6 +3,7 @@ import { IntFilterObjectSchema } from './IntFilter.schema';
 import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { FloatFilterObjectSchema } from './FloatFilter.schema';
+import { IntNullableFilterObjectSchema } from './IntNullableFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -53,8 +54,9 @@ const Schema: z.ZodType<Prisma.LeaseScalarWhereInput> = z
       .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
     utilitiesId: z
-      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
-      .optional(),
+      .union([z.lazy(() => IntNullableFilterObjectSchema), z.number()])
+      .optional()
+      .nullable(),
   })
   .strict();
 

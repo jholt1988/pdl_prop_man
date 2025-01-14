@@ -20,7 +20,7 @@
     "strict": true,
     "noEmit": true,
     "incremental": true,
-    "module": "ESNext",
+    "module": "nodenext",
     "esModuleInterop": true,
     "moduleResolution": "nodenext",
     "resolveJsonModule": true,

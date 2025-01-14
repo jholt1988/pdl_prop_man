@@ -13,7 +13,7 @@ import DataList from "./data_list";
 const LeasesList = ({leases}) => {
    
 
-    const headers = ["ID","Tenant", "Property","Unit",  "Begin Date", "End Date", "Monthly Rent", "Deposit", "Pet Deposit", "Utilities"];
+    const headers = ["ID","Tenant", "Property","Unit",  "Term","Begin Date", "End Date", "Monthly Rent", "Deposit", "Pet Deposit", "Utilities"];
 
     return (
         <DataList
@@ -21,14 +21,17 @@ const LeasesList = ({leases}) => {
             data={leases}
             renderRow={(lease) => (
                 <>
-                    <td className="px-4 py-2">{lease.tenant}</td>
-                    <td className="px-4 py-2">{lease.property}</td>
-                    <td className="px-4 py-2">{lease.start}</td>
-                    <td className="px-4 py-2">{lease.end}</td>
-                    <td className="px-4 py-2">{lease.rent}</td>
+                    <td className="px-4 py-2">{lease.id}</td>
+                    <td className="px-4 py-2">{`${lease.tenant.firstName} ${lease.tenant.lastName}`}</td>
+                    <td className="px-4 py-2">{lease.property.name}</td>
+                    <td className="px-4 py-2">{lease.unit.unitNumber}</td>
+                    <td className="px-4 py-2">{lease.termOfLease}</td>
+                    <td className="px-4 py-2">{lease.beginDate}</td>
+                    <td className="px-4 py-2">{lease.endDate}</td>
+                    <td className="px-4 py-2">{lease.monthlyRent}</td>
                     <td className="px-4 py-2">{lease.deposit}</td>
                     <td className="px-4 py-2">{lease.petDeposit}</td>
-                    <td className="px-4 py-2">{lease.utilities}</td>
+                   
 
                 </>
             )}

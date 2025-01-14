@@ -82,7 +82,7 @@ const AddPropertyForm = () => {
      unitDataArr.forEach(async (unitData) => {  
        createUnit(unitData)
       })
-      console.log("unitData:", unitDataArr)
+      resetProperty();
     }).catch((error) => {
       console.log("Error:", error);
     })

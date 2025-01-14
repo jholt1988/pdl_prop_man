@@ -3,10 +3,10 @@ import { api } from "../../../store/slices/apiSlice";
 export const leaseApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getLeaseList: builder.query({
-            query: (args) => ({
-                url: `lease`,
+            query: () => ({
+                url: "lease",
                 method: "GET",
-                params: args
+                
             }),
             providesTags: ["LeaseList"]
         }),

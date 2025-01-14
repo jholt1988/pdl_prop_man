@@ -8,7 +8,6 @@ const Schema: z.ZodType<Prisma.UtilitiesUncheckedCreateWithoutLeaseInput> = z
     electric: z.boolean(),
     gas: z.boolean(),
     water: z.boolean(),
-    leaseId: z.number(),
   })
   .strict();
 

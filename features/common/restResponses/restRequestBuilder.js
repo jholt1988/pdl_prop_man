@@ -64,7 +64,7 @@ export function restRequestBuilder(options) {
             }
             if (options.onValidateRequestAsync) {
                 const validation = await options.onValidateRequestAsync(req);
-                console.log(validation)
+                  console.log("Validation:", validation)
                 if (!validation.success) {
                     const { issues } = validation;
 
@@ -78,10 +78,10 @@ export function restRequestBuilder(options) {
             }
             if (isValidRequest) {
                 const response = await options.onValidRequestAsync(req, details);
-                console.log(response)
+                
                 return response;
             } else {
-                return badRequestErrorResponse();
+                return badRequestErrorResponse(issues);
             }
         } catch (error) {
             if (error instanceof Error) {

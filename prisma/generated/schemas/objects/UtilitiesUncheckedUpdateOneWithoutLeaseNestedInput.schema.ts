@@ -9,7 +9,7 @@ import { UtilitiesUncheckedUpdateWithoutLeaseInputObjectSchema } from './Utiliti
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.UtilitiesUpdateOneRequiredWithoutLeaseNestedInput> =
+const Schema: z.ZodType<Prisma.UtilitiesUncheckedUpdateOneWithoutLeaseNestedInput> =
   z
     .object({
       create: z
@@ -24,6 +24,8 @@ const Schema: z.ZodType<Prisma.UtilitiesUpdateOneRequiredWithoutLeaseNestedInput
       upsert: z
         .lazy(() => UtilitiesUpsertWithoutLeaseInputObjectSchema)
         .optional(),
+      disconnect: z.boolean().optional(),
+      delete: z.boolean().optional(),
       connect: z.lazy(() => UtilitiesWhereUniqueInputObjectSchema).optional(),
       update: z
         .union([
@@ -34,5 +36,5 @@ const Schema: z.ZodType<Prisma.UtilitiesUpdateOneRequiredWithoutLeaseNestedInput
     })
     .strict();
 
-export const UtilitiesUpdateOneRequiredWithoutLeaseNestedInputObjectSchema =
+export const UtilitiesUncheckedUpdateOneWithoutLeaseNestedInputObjectSchema =
   Schema;

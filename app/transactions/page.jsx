@@ -1,21 +1,21 @@
-import React,{useEffect} from "react";
+'use client'
+import { useGetTenantListQuery } from "../../features/tenants/store/tenant";
+import { useGetLeaseListQuery } from "../../features/leases/store/lease";
+import { useGetTransactionListQuery } from "../../features/ledgers/store/transaction";
 import TransactionManager from "../../components/transaction_manager/transaction_manager";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import { fetchTransactions, selectAllTransactions } from "../../store/slices/ledgerSlice";
-import { selectTenants } from "../../store/slices/ledgerSlice";
-import {selectLeases} from "../../store/slices/leaseSlice";
-function TransactonPage() {
-    const dispatch = useAppDispatch();
-    const transactions = useAppSelector(selectAllTransactions);
-    const tenants = useAppSelector(selectTenants);
-    const leases = useAppSelector(selectLeases);
-    useEffect(() => {
-        dispatch(fetchTransactions());
-    }, []);
 
-    return (
-        <TransactionManager tenants={tenants} lease={leases} transactions={transactions} />
+
+function TransactionPage() {
+
+    const { data } = useGetLeaseListQuery({ pollingInterval: 10000, refetchOnFocus: true, refetchOnReconnect: true })
+    return(
+        <TransactionManager 
+            tenants={data?.data.tenants || []} 
+            leases={data?.data.leases || []} 
+           
+        />
     )
 }
 
-export default TransactonPage
+export default TransactionPage

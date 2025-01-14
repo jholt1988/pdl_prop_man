@@ -62,11 +62,11 @@ model Lease {
   tenantId    Int
   propertyId  Int
   unitId      Int
-  utilitiesId Int           @unique
+  utilitiesId Int?          
   property    Property      @relation(fields: [propertyId], references: [id])
   tenant      Tenant        @relation(fields: [tenantId], references: [id])
   unit        Unit          @relation(fields: [unitId], references: [id])
-  utilities   Utilities     @relation(fields: [utilitiesId], references: [id])
+  utilities   Utilities?    
   Transaction Transaction[]
 }
 
@@ -75,8 +75,8 @@ model Utilities {
   electric Boolean
   gas      Boolean
   water    Boolean
-  leaseId  Int
-  lease    Lease?
+  leaseId  Int      @unique
+  lease    Lease?   @relation(fields:[leaseId], references: [id])
 }
 
 model RepairRequest {

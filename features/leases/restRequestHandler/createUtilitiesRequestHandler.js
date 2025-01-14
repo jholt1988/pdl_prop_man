@@ -23,7 +23,7 @@ const createUtilitiesRequestHandlerOptions = {
             }
         } else {
                 return {
-                    success: true, validatedRequestBody: validation.data
+                    success: true, validatedRequestBody: requestBody
                 }
             }
         },
@@ -34,10 +34,10 @@ const createUtilitiesRequestHandlerOptions = {
 
 
 
-                const lease = await prismaClient.utilities.create(createArgs)
+                const utilities= await prismaClient.utilities.create(createArgs)
                 
             
-                return leaseDetailsResponse(lease)
+                return leaseDetailsResponse(utilities)
             
             
             

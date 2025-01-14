@@ -13,7 +13,7 @@ const Schema: z.ZodType<Prisma.LeaseCreateManyUnitInput> = z
     petDeposit: z.number(),
     tenantId: z.number(),
     propertyId: z.number(),
-    utilitiesId: z.number(),
+    utilitiesId: z.number().optional().nullable(),
   })
   .strict();
 

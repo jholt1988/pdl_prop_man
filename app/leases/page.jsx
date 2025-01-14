@@ -10,13 +10,14 @@ import { useGetPropertyListWithUnitsQuery } from "../../features/properties/stor
 
 function LeasesPage() {
     
-    const {data: leases} = useGetLeaseListQuery({ pollingInterval: 3000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false })
-    const { data: tenants } = useGetTenantListQuery({ pollingInterval: 3000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false })    
-    const { data: properties } = useGetPropertyListWithUnitsQuery({ pollingInterval: 3000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false })   
+    const {  data} = useGetLeaseListQuery({ pollingInterval: 10000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false })
+    // const { data: tenants } = useGetTenantListQuery({ pollingInterval: 3000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false })    
+    // const { data: properties } = useGetPropertyListWithUnitsQuery({ pollingInterval: 3000, refetchonFocus: true, refetchOnReconnect: true, refetchOnMountOrArgChange: true, skip: false }) 
+
     return (
         <>
-            <NewLeaseForm tenants={tenants?.data ?? []} properties={properties?.data ?? []} />
-            <LeasesList leases={leases?.data ?? []} />
+            <NewLeaseForm tenants={data?.data.tenants ?? []} properties={data?.data?.properties ?? []} />
+            <LeasesList leases={data?.data?.leases ?? []} />
         </>
     )
 }       

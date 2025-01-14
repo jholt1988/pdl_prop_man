@@ -3,6 +3,7 @@ import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOpera
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { FloatFieldUpdateOperationsInputObjectSchema } from './FloatFieldUpdateOperationsInput.schema';
+import { NullableIntFieldUpdateOperationsInputObjectSchema } from './NullableIntFieldUpdateOperationsInput.schema';
 import { TransactionUncheckedUpdateManyWithoutLeaseNestedInputObjectSchema } from './TransactionUncheckedUpdateManyWithoutLeaseNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -69,6 +70,13 @@ const Schema: z.ZodType<Prisma.LeaseUncheckedUpdateWithoutUtilitiesInput> = z
         z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
+    utilitiesId: z
+      .union([
+        z.number(),
+        z.lazy(() => NullableIntFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     Transaction: z
       .lazy(
         () => TransactionUncheckedUpdateManyWithoutLeaseNestedInputObjectSchema,

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
+import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { LeaseCountOrderByAggregateInputObjectSchema } from './LeaseCountOrderByAggregateInput.schema';
 import { LeaseAvgOrderByAggregateInputObjectSchema } from './LeaseAvgOrderByAggregateInput.schema';
 import { LeaseMaxOrderByAggregateInputObjectSchema } from './LeaseMaxOrderByAggregateInput.schema';
@@ -20,7 +21,12 @@ const Schema: z.ZodType<Prisma.LeaseOrderByWithAggregationInput> = z
     tenantId: z.lazy(() => SortOrderSchema).optional(),
     propertyId: z.lazy(() => SortOrderSchema).optional(),
     unitId: z.lazy(() => SortOrderSchema).optional(),
-    utilitiesId: z.lazy(() => SortOrderSchema).optional(),
+    utilitiesId: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     _count: z
       .lazy(() => LeaseCountOrderByAggregateInputObjectSchema)
       .optional(),

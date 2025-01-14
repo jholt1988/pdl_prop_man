@@ -1,10 +1,10 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState,createRef, useRef } from 'react';
 
 import { useAppDispatch } from '../../utils/hooks';
 import { useCreateLeaseMutation } from '../../features/leases/store/lease';
 import { useCreateUtilitiesMutation } from '../../features/leases/store/lease';
-const AddLeaseForm = ({ tenants, properties }) => {
+const AddLeaseForm = ({ tenants, properties, leases }) => {
     const dispatch = useAppDispatch();
 
    
@@ -22,66 +22,73 @@ const AddLeaseForm = ({ tenants, properties }) => {
         monthlyRent: '',
         deposit: '',
         petDeposit: '',
-        tenant: '',
-        property: '',
-        unit: '',
-        utilities: {
-            electric: false,
-            gas: false,
-            water: false,
-        },
+        tenant: {},
+        property: {},
+        unit: {},
     });
 
-    const selectTenant = tenants?.find((tenant) => tenant.id === formData.tenant);
-    const selectProperty = properties?.find((property) => property.id === formData.property);
-    const selectUnit = selectProperty?.units.find((unit) => unit.id === formData.unit)
-
+    
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        if (type === 'checkbox') {
-            setFormData({
-                ...formData,
-                utilities: {
-                    ...formData.utilities,
-                    [name]: checked,
-                },
-            });
-        } else {
-            if (name === 'property') { 
+       
+            if (name === 'property') {
                 setPropertyId(Number(value));
-                console.log(propertyId)
-                setUnits(properties[value].units);
+                setUnits(properties.find((property) => property.id === Number(value)).units);
             }
+    
             setFormData({
                 ...formData,
                 [name]: value,
             });
         }
-    };
+    
 
-    const handleSubmit = (e) => {
-        const createUtiltiesResponse = createUtilities(formData.utilities).unwrap();
+const tenantRef = useRef(null);
+    const propertyRef = useRef(null);
+    const unitRef = useRef(null);
+   
+    const handleSubmit =  (e) => {
+        const utilities = document.getElementsByName('utilities');
+        let utilitiesArr = [];
+        utilities.forEach((utility) => {
+            if (utility.checked) {
+                utilitiesArr.push(utility.value);
+            }
+        });
+        e.preventDefault();
+        const newUtilities = {
+            electric: utilitiesArr.includes("electric") ? true : false,
+            gas: utilitiesArr.includes("gas") ? true : false,
+            water: utilitiesArr.includes("water") ? true : false,
+            //  leaseId: leases ? leases.length + 1 : 1
+            }
+          
+         
+            const selectedTenant = tenantRef.current.options[tenantRef.current.selectedIndex];
+            const selectedProperty = propertyRef.current.options[propertyRef.current.selectedIndex];
+            const selectedUnit = unitRef.current.options[unitRef.current.selectedIndex];
         // Handle form submission logic here
         const newLease = {
-            termOfLease: formData.termOfLease,
-            beginDate: formData.beginDate,
-            endDate: formData.endDate,
-            monthlyRent: Number(formData.monthlyRent),
-            deposit: Number(formData.deposit),
-            petDeposit: Number(formData.petDeposit),
-            tenantId: formData.tenant, 
-            propertyId: formData.property,
-            unitId: formData.unit,
-            tenant: select.tenant,
-            property: selectProperty,
-            unit: selectUnit,
-            utilitiesId: createUtiltiesResponse.id,
-            utilities: formData.utilities,
+            
+                termOfLease: formData.termOfLease,
+                beginDate: new Date(formData.beginDate),
+                endDate: new Date(formData.endDate),
+                monthlyRent: Number(formData.monthlyRent),
+                deposit: Number(formData.deposit),
+                petDeposit: Number(formData.petDeposit),
+          
+            tenant: Number(formData.tenant),
+            property: Number(formData.property),
+            unit: Number(formData.unit),    
+            utilities: newUtilities
+            
+           
 
-        }
-        createLease(formData);                                                          
+            }
+            console.log(newLease);
+        createLease(newLease);                                                          
       
-        console.log(formData);
+        
     };
 
     return (
@@ -123,7 +130,7 @@ const AddLeaseForm = ({ tenants, properties }) => {
                 <input
                     type="number"
                     name="monthlyRent"
-                    value={Number(formData.monthlyRent)}
+                    value={formData.monthlyRent}
                     onChange={handleChange}
                     className='input input-bordered input-primary text-accent justify-self-center' 
                 />
@@ -133,7 +140,7 @@ const AddLeaseForm = ({ tenants, properties }) => {
                 <input
                     type="number"
                     name="deposit"
-                    value={Number(formData.deposit)}
+                    value={formData.deposit}
                     onChange={handleChange}
                     className='input input-bordered input-primary text-accent justify-self-center' 
                 />
@@ -143,16 +150,16 @@ const AddLeaseForm = ({ tenants, properties }) => {
                 <input
                     type="number"
                     name="petDeposit"
-                    value={Number(formData.petDeposit)}
+                    value={formData.petDeposit}
                     onChange={handleChange}
                     className='input input-bordered input-primary text-accent justify-self-center' 
                 />
             </div>
             <div className="form-control justify-self-center">
                 <label className='label text-accent'>Tenant:</label>
-                <select name="tenant" className='select select-bordered input-primary text-accent justify-self-center' value={formData.tenant} onChange={handleChange}>
+                <select name="tenant" id='tenantSelect' ref={tenantRef} className='select select-bordered input-primary text-accent justify-self-center' value={formData.tenant} onChange={handleChange}>
                     {tenants?.map((tenant) => (
-                        <option key={tenant.id} value={tenant.id}>
+                        <option key={tenant.id}  value={tenant.id} data-tenant-obj={JSON.stringify(tenant)}>
                             {tenant.firstName + ' ' + tenant.lastName}
                         </option>
                     ))?? <option> No data available</option> }
@@ -160,9 +167,9 @@ const AddLeaseForm = ({ tenants, properties }) => {
             </div>
             <div className="form-control justify-self-center">
                 <label className='label text-accent'>Property:</label>
-                <select name="property"  className='select select-bordered input-primary text-accent justify-self-center'  value={formData.property} onChange={handleChange}>
+                <select name="property" id='propertySelect' ref={ propertyRef} className='select select-bordered input-primary text-accent justify-self-center'  value={formData.property} onChange={handleChange}>
                     {properties?.map((property, i) => (
-                        <option className='text-accent' key={i} value={property.id}>
+                        <option className='text-accent' key={i} data-property-obj={JSON.stringify(property)} value={property.id}>
                             {property.name}
                         </option>
                     ))} ?? <option> No data available</option>
@@ -170,23 +177,24 @@ const AddLeaseForm = ({ tenants, properties }) => {
             </div>
             <div className="form-control justify-self-center">
                 <label className='label text-accent'>Unit:</label>
-                <select className='select select-bordered input-primary text-accent justify-self-center' name="unit" value={formData.unit} onChange={handleChange}>
+                <select id='unitSelect' ref={unitRef} className='select select-bordered input-primary text-accent justify-self-center' name="unit" value={formData.unit} onChange={handleChange}>
                     {units.map((unit) => (
-                        <option key={unit.unitNumber} value={unit.id}>
+                        <option key={unit.unitNumber} data-unit-obj={JSON.stringify(unit)} value={unit.id}>
                             {unit.unitNumber}
                         </option>
                     ))}
                 </select>
-            </div>
+            </div>7
             <div className="form-control justify-self-center">
                 <label className='label text-accent'>Utilities:</label>
                 <div>
                     <label className='label text-accent'>
                         <input
                             type="checkbox"
-                            name="electric"
-                            checked={formData.utilities.electric}
+                            name="utilities"
+                            value="electric"
                             onChange={handleChange}
+
                             className='checkbox checkbox-md input-primary text-accent'
                         />
                         Electric
@@ -194,8 +202,8 @@ const AddLeaseForm = ({ tenants, properties }) => {
                     <label className='label text-accent'>
                         <input
                             type="checkbox"
-                            name="gas"
-                            checked={formData.utilities.gas}
+                            name="utilities"
+                            value="gas"
                             onChange={handleChange}
                             className='checkbox checkbox-md input-primary text-accent'
                         />
@@ -204,8 +212,8 @@ const AddLeaseForm = ({ tenants, properties }) => {
                     <label className='label text-accent'>
                         <input
                             type="checkbox"
-                            name="water"
-                            checked={formData.utilities.water}
+                            name={"utilities"}
+                            value="water"
                             onChange={handleChange}
                             className='checkbox checkbox-md input-primary text-accent'
                         />

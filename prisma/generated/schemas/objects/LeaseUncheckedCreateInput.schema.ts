@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { UtilitiesUncheckedCreateNestedOneWithoutLeaseInputObjectSchema } from './UtilitiesUncheckedCreateNestedOneWithoutLeaseInput.schema';
 import { TransactionUncheckedCreateNestedManyWithoutLeaseInputObjectSchema } from './TransactionUncheckedCreateNestedManyWithoutLeaseInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -15,7 +16,12 @@ const Schema: z.ZodType<Prisma.LeaseUncheckedCreateInput> = z
     tenantId: z.number(),
     propertyId: z.number(),
     unitId: z.number(),
-    utilitiesId: z.number(),
+    utilitiesId: z.number().optional().nullable(),
+    utilities: z
+      .lazy(
+        () => UtilitiesUncheckedCreateNestedOneWithoutLeaseInputObjectSchema,
+      )
+      .optional(),
     Transaction: z
       .lazy(
         () => TransactionUncheckedCreateNestedManyWithoutLeaseInputObjectSchema,

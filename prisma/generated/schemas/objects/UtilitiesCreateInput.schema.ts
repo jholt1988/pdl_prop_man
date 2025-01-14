@@ -8,7 +8,6 @@ const Schema: z.ZodType<Prisma.UtilitiesCreateInput> = z
     electric: z.boolean(),
     gas: z.boolean(),
     water: z.boolean(),
-    leaseId: z.number(),
     lease: z
       .lazy(() => LeaseCreateNestedOneWithoutUtilitiesInputObjectSchema)
       .optional(),

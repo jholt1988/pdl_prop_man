@@ -2,10 +2,11 @@ import { z } from 'zod';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { FloatFieldUpdateOperationsInputObjectSchema } from './FloatFieldUpdateOperationsInput.schema';
+import { NullableIntFieldUpdateOperationsInputObjectSchema } from './NullableIntFieldUpdateOperationsInput.schema';
 import { PropertyUpdateOneRequiredWithoutLeaseNestedInputObjectSchema } from './PropertyUpdateOneRequiredWithoutLeaseNestedInput.schema';
 import { TenantUpdateOneRequiredWithoutLeasesNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutLeasesNestedInput.schema';
 import { UnitUpdateOneRequiredWithoutLeasesNestedInputObjectSchema } from './UnitUpdateOneRequiredWithoutLeasesNestedInput.schema';
-import { UtilitiesUpdateOneRequiredWithoutLeaseNestedInputObjectSchema } from './UtilitiesUpdateOneRequiredWithoutLeaseNestedInput.schema';
+import { UtilitiesUpdateOneWithoutLeaseNestedInputObjectSchema } from './UtilitiesUpdateOneWithoutLeaseNestedInput.schema';
 import { TransactionUpdateManyWithoutLeaseNestedInputObjectSchema } from './TransactionUpdateManyWithoutLeaseNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -48,6 +49,13 @@ const Schema: z.ZodType<Prisma.LeaseUpdateInput> = z
         z.lazy(() => FloatFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
+    utilitiesId: z
+      .union([
+        z.number(),
+        z.lazy(() => NullableIntFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     property: z
       .lazy(() => PropertyUpdateOneRequiredWithoutLeaseNestedInputObjectSchema)
       .optional(),
@@ -58,7 +66,7 @@ const Schema: z.ZodType<Prisma.LeaseUpdateInput> = z
       .lazy(() => UnitUpdateOneRequiredWithoutLeasesNestedInputObjectSchema)
       .optional(),
     utilities: z
-      .lazy(() => UtilitiesUpdateOneRequiredWithoutLeaseNestedInputObjectSchema)
+      .lazy(() => UtilitiesUpdateOneWithoutLeaseNestedInputObjectSchema)
       .optional(),
     Transaction: z
       .lazy(() => TransactionUpdateManyWithoutLeaseNestedInputObjectSchema)

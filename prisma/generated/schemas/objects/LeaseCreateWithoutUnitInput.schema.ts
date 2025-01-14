@@ -14,13 +14,14 @@ const Schema: z.ZodType<Prisma.LeaseCreateWithoutUnitInput> = z
     monthlyRent: z.number(),
     deposit: z.number(),
     petDeposit: z.number(),
+    utilitiesId: z.number().optional().nullable(),
     property: z.lazy(
       () => PropertyCreateNestedOneWithoutLeaseInputObjectSchema,
     ),
     tenant: z.lazy(() => TenantCreateNestedOneWithoutLeasesInputObjectSchema),
-    utilities: z.lazy(
-      () => UtilitiesCreateNestedOneWithoutLeaseInputObjectSchema,
-    ),
+    utilities: z
+      .lazy(() => UtilitiesCreateNestedOneWithoutLeaseInputObjectSchema)
+      .optional(),
     Transaction: z
       .lazy(() => TransactionCreateNestedManyWithoutLeaseInputObjectSchema)
       .optional(),

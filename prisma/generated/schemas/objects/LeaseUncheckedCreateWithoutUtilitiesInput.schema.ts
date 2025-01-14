@@ -15,6 +15,7 @@ const Schema: z.ZodType<Prisma.LeaseUncheckedCreateWithoutUtilitiesInput> = z
     tenantId: z.number(),
     propertyId: z.number(),
     unitId: z.number(),
+    utilitiesId: z.number().optional().nullable(),
     Transaction: z
       .lazy(
         () => TransactionUncheckedCreateNestedManyWithoutLeaseInputObjectSchema,

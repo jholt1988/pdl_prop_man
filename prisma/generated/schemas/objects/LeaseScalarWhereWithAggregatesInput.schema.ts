@@ -3,6 +3,7 @@ import { IntWithAggregatesFilterObjectSchema } from './IntWithAggregatesFilter.s
 import { StringWithAggregatesFilterObjectSchema } from './StringWithAggregatesFilter.schema';
 import { DateTimeWithAggregatesFilterObjectSchema } from './DateTimeWithAggregatesFilter.schema';
 import { FloatWithAggregatesFilterObjectSchema } from './FloatWithAggregatesFilter.schema';
+import { IntNullableWithAggregatesFilterObjectSchema } from './IntNullableWithAggregatesFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -61,8 +62,12 @@ const Schema: z.ZodType<Prisma.LeaseScalarWhereWithAggregatesInput> = z
       .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
       .optional(),
     utilitiesId: z
-      .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
-      .optional(),
+      .union([
+        z.lazy(() => IntNullableWithAggregatesFilterObjectSchema),
+        z.number(),
+      ])
+      .optional()
+      .nullable(),
   })
   .strict();
 

@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { LeaseUncheckedCreateNestedOneWithoutUtilitiesInputObjectSchema } from './LeaseUncheckedCreateNestedOneWithoutUtilitiesInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -10,11 +9,6 @@ const Schema: z.ZodType<Prisma.UtilitiesUncheckedCreateInput> = z
     gas: z.boolean(),
     water: z.boolean(),
     leaseId: z.number(),
-    lease: z
-      .lazy(
-        () => LeaseUncheckedCreateNestedOneWithoutUtilitiesInputObjectSchema,
-      )
-      .optional(),
   })
   .strict();
 

@@ -30,12 +30,6 @@ const Schema: z.ZodType<Prisma.UtilitiesUncheckedUpdateWithoutLeaseInput> = z
         z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    leaseId: z
-      .union([
-        z.number(),
-        z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
   })
   .strict();
 

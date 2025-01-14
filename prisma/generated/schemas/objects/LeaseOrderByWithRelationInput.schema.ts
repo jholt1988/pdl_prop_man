@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
+import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { PropertyOrderByWithRelationInputObjectSchema } from './PropertyOrderByWithRelationInput.schema';
 import { TenantOrderByWithRelationInputObjectSchema } from './TenantOrderByWithRelationInput.schema';
 import { UnitOrderByWithRelationInputObjectSchema } from './UnitOrderByWithRelationInput.schema';
@@ -20,7 +21,12 @@ const Schema: z.ZodType<Prisma.LeaseOrderByWithRelationInput> = z
     tenantId: z.lazy(() => SortOrderSchema).optional(),
     propertyId: z.lazy(() => SortOrderSchema).optional(),
     unitId: z.lazy(() => SortOrderSchema).optional(),
-    utilitiesId: z.lazy(() => SortOrderSchema).optional(),
+    utilitiesId: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     property: z
       .lazy(() => PropertyOrderByWithRelationInputObjectSchema)
       .optional(),
