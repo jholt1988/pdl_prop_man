@@ -5,4 +5,3 @@ import { tenantPropertyLeaseListRequestHandler } from "../../../features/common/
 export {
     createLeaseRequestHandler as POST,
     tenantPropertyLeaseListRequestHandler as GET
-}
